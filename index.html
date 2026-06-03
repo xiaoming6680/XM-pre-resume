@@ -671,6 +671,10 @@
       text-wrap: balance;
     }
 
+    .section-title .title-line {
+      display: block;
+    }
+
     .section-lead {
       max-width: 760px;
       margin: 24px 0 0;
@@ -741,6 +745,11 @@
       margin-top: 120px;
     }
 
+    .needle .section-title {
+      margin-bottom: 34px;
+      line-height: 1.14;
+    }
+
     .ability-list {
       border-top: 1px solid var(--light-line);
     }
@@ -766,41 +775,273 @@
 
     .dial {
       position: relative;
-      width: min(420px, 100%);
+      width: min(430px, 100%);
       aspect-ratio: 1;
       margin: 0 auto;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, #f7f7f5 0 28%, transparent 29%),
-        repeating-conic-gradient(from -12deg, rgba(0,0,0,0.18) 0 1deg, transparent 1deg 6deg),
-        conic-gradient(from 210deg, var(--green) 0 58deg, #e5e5df 58deg 90deg, var(--blue) 90deg 150deg, #e5e5df 150deg 182deg, var(--gold) 182deg 242deg, #e5e5df 242deg 272deg, var(--pink) 272deg 326deg, #e5e5df 326deg 360deg);
-      box-shadow:
-        inset 0 0 0 18px #f5f5f1,
-        inset 0 0 0 34px rgba(0, 0, 0, 0.08),
-        0 30px 80px rgba(0,0,0,0.13);
-    }
-
-    .dial::before {
-      content: "";
-      position: absolute;
-      inset: 21%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 25%, #fff, #d8d8d3 46%, #94948e 62%, #24252c 64% 72%, transparent 73%);
-      box-shadow: inset 0 -18px 34px rgba(0,0,0,0.20);
-    }
-
-    .dial::after {
-      content: "学习中";
-      position: absolute;
-      inset: 35%;
       display: grid;
       place-items: center;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #fff, #d8d8d3 54%, #8a8a84);
-      color: var(--ink);
-      font-size: 22px;
-      font-weight: 950;
+      isolation: isolate;
+      perspective: 1000px;
+      background:
+        radial-gradient(circle at 50% 46%, rgba(255,255,255,0.88) 0 16%, rgba(255,255,255,0.48) 24%, rgba(255,255,255,0.10) 34%, transparent 52%),
+        radial-gradient(circle at 52% 50%, rgba(76,255,176,0.12) 0 18%, rgba(76,255,176,0.06) 38%, transparent 64%),
+        radial-gradient(circle at 30% 22%, rgba(32,80,255,0.09) 0 14%, rgba(32,80,255,0.04) 34%, transparent 58%);
+    }
+
+    .dial::before,
+    .dial::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .dial::before {
+      width: 64%;
+      height: 15%;
+      left: 18%;
+      bottom: 12%;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse, rgba(0,0,0,0.24), rgba(0,0,0,0.10) 42%, transparent 70%);
+      filter: blur(10px);
+      transform-origin: center;
+      animation: sphereShadow 6s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .dial::after {
+      width: 78%;
+      height: 78%;
+      border-radius: 50%;
+      background:
+        linear-gradient(120deg, transparent 0 24%, rgba(255,255,255,0.08) 34%, rgba(255,255,255,0.58) 44%, rgba(76,255,176,0.18) 52%, rgba(255,255,255,0.06) 62%, transparent 76%),
+        radial-gradient(circle at 50% 50%, transparent 0 43%, rgba(255,255,255,0.10) 47%, rgba(255,255,255,0.38) 50%, rgba(255,255,255,0.10) 53%, transparent 58%);
+      opacity: 0.44;
+      transform: rotate(-18deg);
+      animation: sphereSweep 7s ease-in-out infinite;
+      z-index: 5;
+      mix-blend-mode: screen;
+    }
+
+    .sphere-core {
+      position: relative;
+      width: 62%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 32% 22%, rgba(255,255,255,0.98) 0 6%, rgba(255,255,255,0.78) 15%, rgba(255,255,255,0.30) 28%, transparent 48%),
+        radial-gradient(ellipse at 76% 78%, rgba(18,31,31,0.34) 0 10%, rgba(18,31,31,0.24) 24%, rgba(18,31,31,0.12) 43%, transparent 70%),
+        radial-gradient(ellipse at 64% 62%, rgba(8,26,25,0.16) 0 18%, rgba(8,26,25,0.08) 38%, transparent 72%),
+        radial-gradient(ellipse at 38% 46%, rgba(76,255,176,0.10) 0 22%, rgba(76,255,176,0.04) 48%, transparent 74%),
+        linear-gradient(145deg, #ffffff 0%, #f8faf8 14%, #eef2ee 31%, #d9ded9 48%, #b3bdb7 66%, #687275 86%, #242830 100%);
+      background-color: #c9d0cc;
+      box-shadow:
+        inset 34px 28px 52px rgba(255,255,255,0.68),
+        inset -36px -44px 62px rgba(0,0,0,0.38),
+        inset 0 0 0 1px rgba(255,255,255,0.72),
+        0 34px 74px rgba(0,0,0,0.24);
+      transform-style: preserve-3d;
+      animation: sphereFloat 6s ease-in-out infinite;
+      z-index: 3;
+    }
+
+    .sphere-core::before,
+    .sphere-core::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .sphere-core::before {
+      inset: -12%;
+      background:
+        linear-gradient(90deg, transparent 0 15%, rgba(76,255,176,0.05) 17%, rgba(76,255,176,0.16) 20%, rgba(76,255,176,0.05) 23%, transparent 27% 40%, rgba(32,80,255,0.04) 42%, rgba(32,80,255,0.13) 45%, rgba(32,80,255,0.04) 48%, transparent 52% 100%),
+        linear-gradient(0deg, transparent 0 14%, rgba(255,255,255,0.06) 16%, rgba(255,255,255,0.18) 18%, rgba(255,255,255,0.05) 20%, transparent 23% 34%, rgba(5,5,5,0.04) 36%, rgba(5,5,5,0.13) 38%, rgba(5,5,5,0.04) 40%, transparent 44% 100%);
+      opacity: 0.38;
+      transform: rotate(-18deg);
+      animation: sphereSurface 11s linear infinite;
+      -webkit-mask-image: radial-gradient(circle, #000 0 67%, transparent 70%);
+      mask-image: radial-gradient(circle, #000 0 67%, transparent 70%);
+    }
+
+    .sphere-core::after {
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 23%, rgba(255,255,255,0.82) 0 8%, rgba(255,255,255,0.34) 19%, rgba(255,255,255,0.08) 36%, transparent 55%),
+        radial-gradient(ellipse at 76% 76%, rgba(0,0,0,0.20) 0 18%, rgba(0,0,0,0.11) 34%, rgba(0,0,0,0.04) 52%, transparent 75%),
+        radial-gradient(ellipse at 52% 74%, rgba(76,255,176,0.07) 0 22%, rgba(76,255,176,0.03) 44%, transparent 74%);
+      opacity: 0.88;
+      mix-blend-mode: normal;
+      z-index: 4;
+    }
+
+    .sphere-shine {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: linear-gradient(110deg, transparent 0 22%, rgba(255,255,255,0.06) 34%, rgba(255,255,255,0.40) 46%, rgba(76,255,176,0.10) 56%, rgba(255,255,255,0.04) 66%, transparent 82%);
+      filter: blur(4px);
+      transform: translateX(-62%) rotate(7deg);
+      animation: sphereHighlight 5.6s ease-in-out infinite;
+      mix-blend-mode: screen;
+      z-index: 3;
+    }
+
+    .sphere-grid {
+      position: absolute;
+      inset: 12%;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.28);
+      background:
+        repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,0.12) 23px 24px),
+        repeating-linear-gradient(90deg, transparent 0 28px, rgba(5,5,5,0.12) 29px 30px);
+      opacity: 0.38;
+      transform: rotateX(58deg) rotateZ(-18deg);
+      animation: sphereGridTilt 6s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .sphere-dither {
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      pointer-events: none;
+      background:
+        repeating-radial-gradient(circle at 27% 23%, rgba(255,255,255,0.08) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(37deg, rgba(5,5,5,0.032) 0 1px, transparent 1px 4px),
+        repeating-linear-gradient(128deg, rgba(255,255,255,0.032) 0 1px, transparent 1px 6px);
+      opacity: 0.24;
+      mix-blend-mode: soft-light;
+      z-index: 5;
+    }
+
+    .sphere-scan {
+      position: absolute;
+      width: 72%;
+      height: 18%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent 0%, rgba(76,255,176,0.08) 18%, rgba(76,255,176,0.28) 36%, rgba(255,255,255,0.70) 50%, rgba(32,80,255,0.22) 64%, rgba(32,80,255,0.06) 82%, transparent 100%);
+      filter: blur(3px);
+      opacity: 0.62;
+      transform: rotateX(72deg) rotateZ(-12deg) translateY(0);
+      transform-style: preserve-3d;
+      z-index: 4;
+      animation: sphereScan 4.8s ease-in-out infinite;
+    }
+
+    .sphere-rim {
+      position: absolute;
+      width: 70%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 0 1px rgba(5,5,5,0.10),
+        inset 0 0 34px rgba(255,255,255,0.52),
+        0 0 34px rgba(76,255,176,0.12);
+      z-index: 2;
+      animation: sphereRimPulse 5.8s ease-in-out infinite;
+    }
+
+    @keyframes sphereFloat {
+      0%,
+      100% {
+        transform: translateY(0) rotateX(0deg) rotateY(-8deg);
+      }
+
+      50% {
+        transform: translateY(-13px) rotateX(7deg) rotateY(10deg);
+      }
+    }
+
+    @keyframes sphereSurface {
+      to {
+        transform: rotate(-18deg) translateX(-42px);
+      }
+    }
+
+    @keyframes sphereHighlight {
+      0%,
+      100% {
+        transform: translateX(-66%) rotate(7deg);
+      }
+
+      48% {
+        transform: translateX(66%) rotate(7deg);
+      }
+    }
+
+    @keyframes sphereGridTilt {
+      0%,
+      100% {
+        transform: rotateX(58deg) rotateZ(-18deg) scale(1);
+      }
+
+      50% {
+        transform: rotateX(64deg) rotateZ(-10deg) scale(1.04);
+      }
+    }
+
+    @keyframes sphereScan {
+      0%,
+      100% {
+        transform: rotateX(72deg) rotateZ(-12deg) translateY(-74px);
+        opacity: 0;
+      }
+
+      38%,
+      68% {
+        opacity: 0.74;
+      }
+
+      50% {
+        transform: rotateX(72deg) rotateZ(-12deg) translateY(22px);
+      }
+    }
+
+    @keyframes sphereRimPulse {
+      0%,
+      100% {
+        transform: scale(0.96);
+        opacity: 0.58;
+      }
+
+      50% {
+        transform: scale(1.02);
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes sphereShadow {
+      0%,
+      100% {
+        transform: scale(0.95);
+        opacity: 0.7;
+      }
+
+      50% {
+        transform: scale(0.78);
+        opacity: 0.44;
+      }
+    }
+
+    @keyframes sphereSweep {
+      0%,
+      100% {
+        transform: rotate(-18deg) translateX(-42px);
+        opacity: 0;
+      }
+
+      45% {
+        opacity: 0.44;
+      }
+
+      58% {
+        transform: rotate(-18deg) translateX(42px);
+        opacity: 0.28;
+      }
     }
 
     .projects-head {
@@ -2007,7 +2248,7 @@
 
         <div class="needle">
           <div>
-            <h2 class="section-title appear">我怎么把学习变成项目</h2>
+            <h2 class="section-title appear"><span class="title-line">我如何将学习</span><span class="title-line">融入实践？</span></h2>
             <div class="ability-list">
               <article class="ability appear">
                 <h3>把课程知识落到项目里</h3>
@@ -2027,7 +2268,15 @@
               </article>
             </div>
           </div>
-          <div class="dial appear" aria-label="技能图表"></div>
+          <div class="dial appear" aria-label="学习融入实践的动态球形图">
+            <span class="sphere-rim" aria-hidden="true"></span>
+            <span class="sphere-core" aria-hidden="true">
+              <span class="sphere-shine"></span>
+              <span class="sphere-grid"></span>
+              <span class="sphere-dither"></span>
+            </span>
+            <span class="sphere-scan" aria-hidden="true"></span>
+          </div>
         </div>
 
         <div class="projects-head">
@@ -2246,7 +2495,15 @@
               <p>目前暂无正式推荐语，后续会补充任课老师、小组成员、项目协作者或社区反馈。</p>
             </article>
           </div>
-          <div class="dial appear" aria-label="技能图表"></div>
+          <div class="dial appear" aria-label="技能成长动态球形图">
+            <span class="sphere-rim" aria-hidden="true"></span>
+            <span class="sphere-core" aria-hidden="true">
+              <span class="sphere-shine"></span>
+              <span class="sphere-grid"></span>
+              <span class="sphere-dither"></span>
+            </span>
+            <span class="sphere-scan" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
     </section>
