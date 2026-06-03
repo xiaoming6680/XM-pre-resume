@@ -269,6 +269,7 @@
 
     .nav-right {
       gap: 8px;
+      flex: 0 0 auto;
     }
 
     .nav-action {
@@ -291,6 +292,106 @@
       width: auto;
       min-width: 34px;
       padding: 0 10px;
+    }
+
+    .language-toggle {
+      position: relative;
+      min-width: 46px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--white);
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .mobile-language-toggle {
+      display: none;
+    }
+
+    .language-toggle::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(120deg, transparent 0 34%, rgba(76,255,176,0.26) 50%, transparent 66% 100%);
+      opacity: 0;
+      transform: translateX(-110%);
+      pointer-events: none;
+    }
+
+    .language-toggle.switching {
+      animation: languageSwitch 520ms cubic-bezier(0.2, 0.78, 0.18, 1);
+    }
+
+    .language-toggle.switching::before {
+      animation: languageSweep 520ms ease;
+    }
+
+    .language-toggle:disabled {
+      cursor: wait;
+      opacity: 0.82;
+    }
+
+    main,
+    .footer {
+      transition:
+        opacity 180ms ease,
+        transform 180ms ease,
+        filter 180ms ease;
+    }
+
+    body.language-exiting main,
+    body.language-exiting .footer {
+      opacity: 0;
+      transform: translateY(10px) scale(0.992);
+      filter: blur(2px);
+    }
+
+    body.language-entering main,
+    body.language-entering .footer {
+      animation: languageContentEnter 360ms cubic-bezier(0.2, 0.78, 0.18, 1);
+    }
+
+    @keyframes languageSwitch {
+      0% {
+        transform: translateY(0) rotateX(0deg) scale(1);
+      }
+      42% {
+        transform: translateY(-2px) rotateX(72deg) scale(0.96);
+      }
+      100% {
+        transform: translateY(0) rotateX(0deg) scale(1);
+      }
+    }
+
+    @keyframes languageSweep {
+      0% {
+        opacity: 0;
+        transform: translateX(-110%);
+      }
+      28% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(110%);
+      }
+    }
+
+    @keyframes languageContentEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.996);
+        filter: blur(2px);
+      }
+      64% {
+        opacity: 1;
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
     }
 
     .nav-action:hover,
@@ -384,16 +485,22 @@
       font-weight: 950;
       letter-spacing: 0;
       max-width: 1100px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
-    .hero-title span {
+    .hero-title > span {
       display: block;
     }
 
-    .hero-title span + span {
+    .hero-title > span + span {
       margin-top: 10px;
       font-size: clamp(44px, 6.1vw, 88px);
       line-height: 1.02;
+    }
+
+    .hero-title .mobile-title-break {
+      display: inline;
     }
 
     .hero-subtitle {
@@ -403,6 +510,7 @@
       font-size: clamp(20px, 2.1vw, 30px);
       line-height: 1.52;
       font-weight: 650;
+      overflow-wrap: anywhere;
     }
 
     .pdf-download {
@@ -1916,6 +2024,7 @@
       .top-nav {
         width: calc(100vw - 20px);
         gap: 8px;
+        overflow: hidden;
       }
 
       .divider {
@@ -1939,7 +2048,11 @@
         padding: 112px 0 130px;
       }
 
-      .hero-title span + span {
+      .hero-copy {
+        max-width: calc(100vw - 52px);
+      }
+
+      .hero-title > span + span {
         font-size: clamp(38px, 9vw, 58px);
       }
 
@@ -2025,6 +2138,23 @@
       .top-nav {
         padding: 7px 8px;
         min-height: 52px;
+        overflow: visible;
+      }
+
+      .nav-left {
+        gap: 10px;
+        flex: 0 1 auto;
+        min-width: 0;
+        max-width: calc(100% - 54px);
+      }
+
+      .nav-right {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        transform: translateY(-50%);
+        gap: 4px;
+        margin-left: auto;
       }
 
       .mark {
@@ -2069,25 +2199,92 @@
         gap: 12px;
       }
 
+      .nav-link.optional-mobile {
+        display: none;
+      }
+
       .nav-link,
       .nav-action {
         font-size: 13px;
       }
 
+      .nav-action {
+        min-height: 32px;
+        padding: 6px 8px;
+      }
+
+      .nav-action[href="#contact"] {
+        display: none;
+      }
+
+      .language-toggle {
+        min-width: 38px;
+        height: 32px;
+        padding-inline: 8px;
+      }
+
+      .nav-right .language-toggle {
+        display: none;
+      }
+
+      .mobile-language-toggle {
+        display: inline-flex !important;
+      }
+
+      .pdf-download {
+        display: none;
+      }
+
       .status {
+        position: relative;
+        display: block;
+        padding-left: 20px;
         font-size: 15px;
+        width: 300px;
+        max-width: calc(100vw - 56px);
+        line-height: 1.45;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .status::before {
+        position: absolute;
+        left: 0;
+        top: 0.55em;
       }
 
       .hero-title {
         font-size: clamp(42px, 12.5vw, 62px);
       }
 
-      .hero-title span + span {
-        font-size: clamp(34px, 9.6vw, 48px);
+      .hero-title > span + span {
+        font-size: clamp(30px, 8.3vw, 38px);
+        line-height: 1.08;
+      }
+
+      .hero-title .mobile-title-break {
+        display: block;
       }
 
       .hero-subtitle {
+        width: 330px;
         font-size: 18px;
+        max-width: calc(100vw - 56px);
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-all;
+      }
+
+      html[lang="en"] .hero-subtitle {
+        width: 318px;
+        max-width: calc(100vw - 64px);
+        word-break: normal;
+        overflow-wrap: anywhere;
+        font-size: 17px;
+      }
+
+      .card-head span:last-child {
+        display: none;
       }
 
       .section {
@@ -2154,18 +2351,18 @@
       </a>
       <span class="divider" aria-hidden="true"></span>
       <div class="nav-links">
-        <a class="nav-link active" href="#work"><span>项目</span><span class="nav-dot" aria-hidden="true"></span></a>
-        <a class="nav-link" href="#story"><span>关于我</span><span class="nav-dot" aria-hidden="true"></span></a>
-        <a class="nav-link" href="#study"><span>学习路径</span><span class="nav-dot" aria-hidden="true"></span></a>
-        <a class="nav-link" href="#skills"><span>技能工具</span><span class="nav-dot" aria-hidden="true"></span></a>
-        <a class="nav-link" href="#life"><span>生活平台</span><span class="nav-dot" aria-hidden="true"></span></a>
+        <a class="nav-link active" href="#work"><span>作品</span><span class="nav-dot" aria-hidden="true"></span></a>
+        <a class="nav-link" href="#story"><span>关于</span><span class="nav-dot" aria-hidden="true"></span></a>
+        <a class="nav-link optional-mobile" href="#skills"><span>技能</span><span class="nav-dot" aria-hidden="true"></span></a>
+        <a class="nav-link optional-mobile" href="#life"><span>平台</span><span class="nav-dot" aria-hidden="true"></span></a>
       </div>
+      <button class="nav-action language-toggle mobile-language-toggle" type="button" data-language-toggle aria-label="Switch to English">EN</button>
     </div>
     <div class="nav-right">
-      <a class="nav-action" href="#contact">联系我</a>
       <a class="nav-action icon" href="https://github.com/xiaoming6680?tab=repositories" target="_blank" rel="noreferrer" aria-label="打开 GitHub">GitHub</a>
       <a class="nav-action icon" href="https://space.bilibili.com/275188875" target="_blank" rel="noreferrer" aria-label="打开 B 站">B站</a>
-      <button class="nav-action icon" type="button" data-copy="2724153495@qq.com" aria-label="复制邮箱">邮箱</button>
+      <a class="nav-action" href="#contact">联系我</a>
+      <button class="nav-action language-toggle" type="button" data-language-toggle aria-label="Switch to English">EN</button>
       <button class="nav-action pdf-download" id="download-pdf" type="button">下载简历</button>
     </div>
   </nav>
@@ -2177,7 +2374,7 @@
           <div class="status">悉尼 · UTS 人工智能本科 · 大一在读</div>
           <h1 class="hero-title">
             <span>黄志铭</span>
-            <span>把想法做成能用的项目</span>
+            <span><span>把想法做成</span><span class="mobile-title-break">能用的项目</span></span>
           </h1>
           <p class="hero-subtitle">我在 UTS 学习人工智能，正在用课程项目和个人工具练习软件开发、数据库建模与 Minecraft 工具开发。这个页面记录我的学习路径、项目作品和技术成长。</p>
         </div>
@@ -2666,8 +2863,6 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script>
     const body = document.body;
     const root = document.documentElement;
@@ -2676,12 +2871,359 @@
     const contactSection = document.querySelector(".contact");
     const pdfButton = document.getElementById("download-pdf");
     const pdfResume = document.getElementById("pdf-resume");
+    const languageButtons = Array.from(document.querySelectorAll("[data-language-toggle]"));
     const links = Array.from(document.querySelectorAll(".nav-link"));
     const map = links.map((link) => {
       const id = link.getAttribute("href").slice(1);
       return { link, section: document.getElementById(id) };
     }).filter((item) => item.section);
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const pageMeta = {
+      zh: {
+        title: "黄志铭｜个人主页型网页简历",
+        description: "黄志铭的个人主页型网页简历，展示 UTS 人工智能学习、课程项目、个人技术项目和内容平台。"
+      },
+      en: {
+        title: "Zhiming Huang | Personal Resume Site",
+        description: "Zhiming Huang's personal resume site, covering UTS AI study, course projects, technical projects, and content channels."
+      }
+    };
+    const translationMap = {
+      "页面导航": "Page navigation",
+      "指南针，点击回到顶部": "Compass, back to top",
+      "回到顶部": "Back to top",
+      "项目": "Work",
+      "关于我": "Story",
+      "关于": "About",
+      "技能": "Skills",
+      "平台": "Channels",
+      "联系我": "Hi",
+      "打开 GitHub": "Open GitHub",
+      "打开 B 站": "Open Bilibili",
+      "复制邮箱": "Copy email",
+      "邮箱": "Email",
+      "下载简历": "Download CV",
+      "悉尼 · UTS 人工智能本科 · 大一在读": "Sydney · UTS AI undergraduate · First-year student",
+      "黄志铭": "Zhiming Huang",
+      "把想法做成能用的项目": "Turning ideas into usable projects",
+      "把想法做成": "Turning ideas into",
+      "能用的项目": "usable projects",
+      "我在 UTS 学习人工智能，正在用课程项目和个人工具练习软件开发、数据库建模与 Minecraft 工具开发。这个页面记录我的学习路径、项目作品和技术成长。": "I study Artificial Intelligence at UTS and use course projects plus personal tools to practice software development, database modeling, and Minecraft tool development. This page records my study path, projects, and technical growth.",
+      "主页入口": "Homepage entry points",
+      "我在做什么": "What I build",
+      "作品": "Work",
+      "工具": "Tools",
+      "游戏": "Games",
+      "我怎么走到这里": "How I got here",
+      "故事": "Story",
+      "屏幕之外": "Off-screen",
+      "生活": "Life",
+      "项目记录": "Project log",
+      "我正在积累的能力": "Capabilities I am building",
+      "我还在本科早期阶段，这里不包装成成熟履历，而是记录正在形成的学习能力、项目能力和持续更新的作品集。": "I am still early in my undergraduate journey. This page keeps the story honest: study ability, project practice, and a portfolio that will keep growing.",
+      "学习": "Study",
+      "人工智能本科在读": "AI undergraduate student",
+      "在英文授课环境中学习计算机、数学、数据库和 AI 相关基础课程。": "Studying computer science, mathematics, databases, and AI fundamentals in an English-taught environment.",
+      "课程项目和个人工具": "Course projects and personal tools",
+      "用 Java、SQL、JavaFX、Web 工具和 Minecraft Fabric 练习把知识做成项目。": "Using Java, SQL, JavaFX, web tools, and Minecraft Fabric to turn knowledge into working projects.",
+      "更新": "Updates",
+      "长期更新的主页": "A long-term home page",
+      "把学习路径、项目截图、仓库链接、内容平台和后续经历逐步补齐。": "Gradually adding study notes, project screenshots, repository links, content channels, and future experience.",
+      "我如何将学习": "How I connect",
+      "融入实践？": "learning with practice",
+      "把课程知识落到项目里": "Turn coursework into projects",
+      "学习 Java、Python、SQL 和 ERD 后，优先用课程项目或个人小工具验证理解。": "After learning Java, Python, SQL, and ERD modeling, I try to validate the ideas through course projects or small personal tools.",
+      "从真实需求开始": "Start from real needs",
+      "Minecraft 好友服控制菜单来自实际游戏体验，希望让朋友服管理和互动更方便。": "The Minecraft friend-server control menu comes from real play needs: making server management and interaction easier.",
+      "持续整理文档": "Keep documenting",
+      "每个项目都会继续补齐截图、仓库链接、说明文档和演示内容，方便回看和展示。": "Each project will keep gaining screenshots, repository links, documentation, and demos for review and presentation.",
+      "保持基础阶段的真实表达": "Keep the early-stage story honest",
+      "技能只写基础掌握、项目练习中和持续学习，不把大一阶段包装成成熟工作经历。": "Skills are described as fundamentals, project practice, and ongoing learning instead of mature work experience.",
+      "学习融入实践的动态球形图": "Animated sphere showing learning through practice",
+      "正在打磨的项目": "Projects in progress",
+      "这里优先展示已经有明确方向的课程项目和个人工具。真实链接、截图和说明会随着项目进展继续补齐。": "This section highlights course projects and personal tools with a clear direction. Real links, screenshots, and notes will be added as they mature.",
+      "Minecraft 好友服控制菜单 MOD": "Minecraft Friend Server Control Menu Mod",
+      "开发与优化中": "In development",
+      "朋友服控制菜单": "Friend server menu",
+      "传送点": "Warps",
+      "坐标": "Coords",
+      "任务": "Tasks",
+      "通知": "Notices",
+      "状态": "Status",
+      "权限": "Access",
+      "面向 Minecraft 好友服务器的游戏内控制菜单，让常用管理和互动功能更集中、更好用。": "An in-game control menu for a Minecraft friend server, making common management and interaction features easier to access.",
+      "图形界面": "GUI",
+      "服务端工具": "Server tool",
+      "Minecraft 附魔指令生成器": "Minecraft Enchanted Command Generator",
+      "基础版本": "Basic version",
+      "指令生成工具": "Command generator",
+      "物品与附魔选择": "Item and enchantment choices",
+      "钻石剑": "Diamond sword",
+      "锋利 V": "Sharpness V",
+      "耐久 III": "Unbreaking III",
+      "可视化生成新版 Minecraft 物品附魔指令，减少手写复杂命令时的格式错误。": "A visual tool for generating newer Minecraft enchanted item commands and reducing formatting errors.",
+      "网页工具": "Web tool",
+      "Minecraft 指令": "Minecraft commands",
+      "健康管理应用数据库设计": "Health Management App Database Design",
+      "课程项目完成": "Course project complete",
+      "用户": "User",
+      "饮食": "Food",
+      "目标": "Goal",
+      "日志": "Log",
+      "围绕健康管理应用做数据库建模，梳理用户、饮食、运动、目标和日志之间的关系。": "Database modeling for a health management app, covering relationships among users, meals, exercise, goals, and logs.",
+      "数据库设计": "Database design",
+      "Java 商店管理系统": "Java Store Management System",
+      "使用 Java 实现简单商店管理系统，练习面向对象、控制台交互和基础业务逻辑。": "A simple Java store management system for practicing OOP, console interaction, and basic business logic.",
+      "面向对象": "OOP",
+      "控制台程序": "Console app",
+      "JavaFX 图形界面商店系统": "JavaFX Store GUI System",
+      "商店界面": "Store UI",
+      "用 JavaFX 和 FXML 搭建商店管理界面，练习界面布局、事件绑定和后端模型连接。": "A JavaFX and FXML store interface for practicing layout, event binding, and linking UI with backend model classes.",
+      "后续项目占位": "Future project slot",
+      "待补充": "To add",
+      "项目截图待补充": "Project screenshot to add",
+      "真实链接、截图、说明文档和演示内容会在后续更新。": "Real links, screenshots, documentation, and demos will be added later.",
+      "后续会继续补充新的课程项目、个人工具、真实截图和在线演示地址。": "New course projects, personal tools, real screenshots, and online demos will be added over time.",
+      "截图待补充": "Screenshot pending",
+      "仓库待补充": "Repo pending",
+      "我怎么找到方向": "How I found direction",
+      "这里记录真实的学习阶段、探索过程和下一步目标，不虚构经历，也不把大一阶段包装成成熟工作履历。": "This section records the real study stage, exploration process, and next goals without inventing experience or overstating first-year work.",
+      "起点": "Starting point",
+      "我叫黄志铭，目前就读于澳大利亚悉尼科技大学，专业是人工智能学士。现在处于本科大一阶段，正在学习计算机和 AI 方向的基础课程。": "My name is Zhiming Huang. I currently study Bachelor of Artificial Intelligence at the University of Technology Sydney and am building foundations in computing and AI.",
+      "探索": "Exploration",
+      "学习过程中，我逐渐接触 Java、Python、SQL、数据库设计、ERD 建模和简单图形界面开发。我更希望通过实际项目理解技术如何被应用。": "Through study, I have been learning Java, Python, SQL, database design, ERD modeling, and basic GUI development. I prefer understanding technology through real projects.",
+      "转折": "Turning point",
+      "我开始把课程知识放进真实项目里：数据库设计、Java 商店系统、JavaFX 项目，以及基于 Minecraft 的个人技术项目。现在我用这些项目记录自己的成长。": "I started applying coursework to real projects: database design, a Java store system, a JavaFX project, and Minecraft-based technical tools.",
+      "代码": "Code",
+      "2025.06 - 至今": "2025.06 - Present",
+      "悉尼科技大学": "University of Technology Sydney",
+      "人工智能学士，本科大一在读。地点：澳大利亚悉尼。当前学习方向包括人工智能基础、Java、Python、数据库设计、SQL、离散数学、计算机网络和数学基础。": "Bachelor of Artificial Intelligence, first-year undergraduate. Location: Sydney, Australia. Current study areas include AI foundations, Java, Python, database design, SQL, discrete mathematics, computer networks, and mathematics.",
+      "当前说明": "Current note",
+      "保持真实更新": "Keep updates honest",
+      "目前暂无正式实习、兼职、社团或志愿者经历。后续有真实经历后，再加入这条时间线。": "I currently do not have formal internship, part-time, club, or volunteer experience. Real experience will be added to the timeline when it happens.",
+      "技能与证明": "Skills and evidence",
+      "这里用图表、标签和卡片整理当前能力。技能只表达基础掌握和持续学习中，后续会用真实项目和反馈补充证明。": "This section organizes current abilities with visuals, tags, and cards. Skills are framed as fundamentals and ongoing learning, with evidence added through real projects and feedback.",
+      "编程与开发": "Programming and development",
+      "Java、Python、JavaScript、网页基础内容展示和工具型项目。": "Java, Python, JavaScript, basic web presentation, and tool-style projects.",
+      "数据库与建模": "Database and modeling",
+      "SQL 基础查询、ERD 建模、业务规则分析、主键外键和关系型数据库基础。": "Basic SQL queries, ERD modeling, business rule analysis, primary and foreign keys, and relational database fundamentals.",
+      "工具与平台": "Tools and platforms",
+      "Visual Studio Code、GitHub、Java / JDK、JavaFX、FXML、Office 和 Minecraft Fabric。": "Visual Studio Code, GitHub, Java / JDK, JavaFX, FXML, Office, and Minecraft Fabric.",
+      "后续补充评价": "Future recommendations",
+      "目前暂无正式推荐语，后续会补充任课老师、小组成员、项目协作者或社区反馈。": "There are no formal recommendations yet. Feedback from teachers, teammates, collaborators, or communities can be added later.",
+      "技能成长动态球形图": "Animated sphere showing skill growth",
+      "我在哪里更新": "Where I update",
+      "这里是内容输出和个人平台入口。GitHub 和 B 站是当前已有入口，小红书和公众号暂时作为未来占位。": "These are my content and personal platform links. GitHub and Bilibili are available now; Xiaohongshu and WeChat are future placeholders.",
+      "GitHub Logo": "GitHub logo",
+      "整理课程项目、Minecraft 相关项目、工具项目和编程学习记录。": "Course projects, Minecraft-related projects, tools, and programming learning records.",
+      "课程项目": "Course projects",
+      "工具项目": "Tool projects",
+      "学习记录": "Study notes",
+      "打开仓库列表": "Open repositories",
+      "B站": "Bilibili",
+      "B 站": "Bilibili",
+      "B站 Logo": "Bilibili logo",
+      "后续会记录 UTS 留学生活、AI 专业学习、编程学习和 Minecraft MOD 开发过程。": "Future posts may cover UTS study life, AI learning, programming notes, and Minecraft mod development.",
+      "留学生活": "Study abroad",
+      "游戏内容": "Game content",
+      "打开个人空间": "Open profile",
+      "小红书": "Xiaohongshu",
+      "小红书 Logo": "Xiaohongshu logo",
+      "未来用于更新留学生活、学习记录和项目展示。": "A future channel for study life, learning records, and project showcases.",
+      "生活记录": "Life notes",
+      "暂未开放": "Not open yet",
+      "锁定": "Locked",
+      "公众号": "WeChat account",
+      "微信 Logo": "WeChat logo",
+      "未来用于沉淀长期学习记录、项目总结和技术文章。": "A future place for long-form study notes, project summaries, and technical articles.",
+      "技术文章": "Tech writing",
+      "“真实评价会在获得授权后补充。在此之前，只保留当前学习和项目进展。”": "\"Real recommendations will be added after permission. For now, this page keeps only current learning and project progress.\"",
+      "推荐评价": "Recommendations",
+      "“后续会补充 GitHub 项目反馈、B 站观众反馈或其他社区反馈。”": "\"GitHub project feedback, Bilibili audience feedback, or other community feedback can be added later.\"",
+      "社区反馈": "Community feedback",
+      "一起做点东西？": "Want to build something?",
+      "打个招呼": "Say hi",
+      "可以交流 AI / IT 学习、软件开发入门项目、Minecraft MOD / 工具开发、数据库课程项目、留学学习经验，或一起改进这个个人主页。": "I am open to talking about AI / IT study, beginner software projects, Minecraft mods and tools, database course projects, study-abroad experience, or improving this personal site.",
+      "复制手机号": "Copy phone",
+      "打开 B 站": "Open Bilibili",
+      "预约链接待补充": "Booking link to add",
+      "A4 单页简历 PDF 模板": "A4 one-page resume PDF template",
+      "UTS 人工智能本科在读，关注 AI 应用、软件开发、数据库建模和 Minecraft 工具开发。": "UTS Artificial Intelligence undergraduate focused on AI applications, software development, database modeling, and Minecraft tool development.",
+      "经历和履历": "Experience",
+      "悉尼科技大学 University of Technology Sydney": "University of Technology Sydney",
+      "人工智能学士，本科大一在读。当前学习方向包括 Java、Python、SQL、数据库设计、离散数学、计算机网络和 AI 基础课程。": "Bachelor of Artificial Intelligence, first-year undergraduate. Current study areas include Java, Python, SQL, database design, discrete mathematics, computer networks, and AI foundations.",
+      "课程项目与个人工具实践": "Course projects and personal tool practice",
+      "持续更新": "Ongoing",
+      "把课程知识落到可展示项目中，包括数据库建模、Java 控制台系统、JavaFX 图形界面项目和 Minecraft 相关工具。": "Applying coursework to presentable projects, including database modeling, a Java console system, a JavaFX GUI project, and Minecraft-related tools.",
+      "重点作品": "Selected projects",
+      "面向好友服务器的游戏内控制菜单，让常用管理和互动功能更集中、更好用。": "An in-game control menu for a friend server, making common management and interaction features more centralized and usable.",
+      "可视化生成新版 Minecraft 物品附魔命令，减少手写复杂命令时的格式错误。": "A visual generator for newer Minecraft enchanted item commands, reducing manual formatting errors.",
+      "核心技能": "Core skills",
+      "编程：Java、Python、JavaScript、HTML / CSS": "Programming: Java, Python, JavaScript, HTML / CSS",
+      "数据库：SQL、ERD、关系型数据建模、业务规则分析": "Database: SQL, ERD, relational data modeling, business rule analysis",
+      "界面开发：JavaFX、FXML、基础响应式网页": "Interface development: JavaFX, FXML, basic responsive web pages",
+      "工具平台：GitHub、VS Code、JDK、Office、Minecraft Fabric": "Tools: GitHub, VS Code, JDK, Office, Minecraft Fabric",
+      "项目能力：需求拆解、文档整理、课程项目落地": "Project skills: requirement breakdown, documentation, course project delivery",
+      "语言与学习环境：英文授课环境下持续学习计算机和 AI 基础": "Language and learning: continuing computer science and AI study in an English-taught environment",
+      "说明：当前简历用于传统投递场景，保留核心信息；完整作品展示和后续更新见在线主页。": "Note: This resume is for traditional applications and keeps core information. The full portfolio and updates are on the online site.",
+      "个人主页型网页简历，持续更新中。": "Personal resume website, continuously updated.",
+      "已复制": "Copied"
+    };
+    const dynamicText = {
+      downloadResume: { zh: "下载简历", en: "Download CV" },
+      loadingPdf: { zh: "加载中...", en: "Loading..." },
+      generatingPdf: { zh: "生成中...", en: "Generating..." },
+      pdfLoadingFailed: { zh: "PDF 工具加载失败，请检查网络后重试", en: "PDF tools failed to load. Check the network and try again." },
+      pdfGenerated: { zh: "PDF 已生成", en: "PDF generated" },
+      pdfFailed: { zh: "PDF 生成失败，请刷新后重试", en: "PDF generation failed. Refresh and try again." },
+      copiedPrefix: { zh: "已复制：", en: "Copied: " },
+      copyFailed: { zh: "复制失败，请手动复制", en: "Copy failed. Please copy manually." },
+      languageButton: { zh: "EN", en: "中文" },
+      languageAria: { zh: "Switch to English", en: "切换到中文" },
+      resumeFilename: { zh: "黄志铭-单页简历.pdf", en: "Zhiming-Huang-resume.pdf" }
+    };
+    let pdfButtonState = "idle";
+    let currentLanguage = getStoredLanguage();
+    const textNodes = collectTextNodes(document.body);
+    const translatedAttributes = collectTranslatedAttributes();
+
+    function getStoredLanguage() {
+      const requested = new URLSearchParams(window.location.search).get("lang");
+      if (requested === "en" || requested === "zh") {
+        return requested;
+      }
+
+      try {
+        const stored = localStorage.getItem("resume-language");
+        return stored === "en" ? "en" : "zh";
+      } catch {
+        return "zh";
+      }
+    }
+
+    function getDynamicText(key) {
+      return dynamicText[key]?.[currentLanguage] || dynamicText[key]?.zh || "";
+    }
+
+    function translatePhrase(phrase, language = currentLanguage) {
+      return language === "zh" ? phrase : translationMap[phrase] || phrase;
+    }
+
+    function collectTextNodes(rootNode) {
+      const nodes = [];
+      const walker = document.createTreeWalker(rootNode, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          const parent = node.parentElement;
+          if (!parent || parent.closest("script, style")) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        const trimmed = node.nodeValue.trim();
+        if (translationMap[trimmed] || trimmed === "下载简历") {
+          nodes.push({
+            node,
+            key: trimmed,
+            prefix: node.nodeValue.match(/^\s*/)[0],
+            suffix: node.nodeValue.match(/\s*$/)[0]
+          });
+        }
+      }
+
+      return nodes;
+    }
+
+    function collectTranslatedAttributes() {
+      const entries = [];
+      document.querySelectorAll("[aria-label], [title], [alt], meta[name='description']").forEach((element) => {
+        ["aria-label", "title", "alt", "content"].forEach((attribute) => {
+          if (!element.hasAttribute(attribute)) return;
+          const value = element.getAttribute(attribute);
+          if (translationMap[value]) {
+            entries.push({ element, attribute, key: value });
+          }
+        });
+      });
+      return entries;
+    }
+
+    function applyLanguage(language, persist = false) {
+      currentLanguage = language === "en" ? "en" : "zh";
+
+      if (persist) {
+        try {
+          localStorage.setItem("resume-language", currentLanguage);
+        } catch {}
+      }
+
+      document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
+      document.title = pageMeta[currentLanguage].title;
+      const description = document.querySelector("meta[name='description']");
+      if (description) {
+        description.setAttribute("content", pageMeta[currentLanguage].description);
+      }
+
+      textNodes.forEach(({ node, key, prefix, suffix }) => {
+        const translated = key === "下载简历" ? getDynamicText("downloadResume") : translatePhrase(key);
+        node.nodeValue = `${prefix}${translated}${suffix}`;
+      });
+
+      translatedAttributes.forEach(({ element, attribute, key }) => {
+        element.setAttribute(attribute, translatePhrase(key));
+      });
+
+      languageButtons.forEach((button) => {
+        button.textContent = getDynamicText("languageButton");
+        button.setAttribute("aria-label", getDynamicText("languageAria"));
+      });
+
+      updatePdfButtonText();
+    }
+
+    let languageTransitioning = false;
+    const wait = (duration) => new Promise((resolve) => setTimeout(resolve, duration));
+
+    async function switchLanguage(button) {
+      if (languageTransitioning) return;
+      languageTransitioning = true;
+
+      const nextLanguage = currentLanguage === "zh" ? "en" : "zh";
+      const exitDuration = reducedMotion ? 0 : 180;
+      const enterDuration = reducedMotion ? 0 : 360;
+
+      languageButtons.forEach((item) => {
+        item.disabled = true;
+        item.classList.remove("switching");
+      });
+      body.classList.remove("language-exiting", "language-entering");
+
+      void button.offsetWidth;
+      button.classList.add("switching");
+      body.classList.add("language-exiting");
+
+      await wait(exitDuration);
+      applyLanguage(nextLanguage, true);
+
+      body.classList.remove("language-exiting");
+      body.classList.add("language-entering");
+
+      await wait(enterDuration);
+      body.classList.remove("language-entering");
+      languageButtons.forEach((item) => {
+        item.disabled = false;
+        item.classList.remove("switching");
+      });
+      languageTransitioning = false;
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => switchLanguage(button));
+    });
+
+    applyLanguage(currentLanguage);
 
     function alignToHashTarget() {
       if (!window.location.hash) return;
@@ -2791,17 +3333,61 @@
 
     document.querySelectorAll(".appear").forEach((element) => revealObserver.observe(element));
 
+    let pdfLibrariesPromise = null;
+
+    function updatePdfButtonText() {
+      if (!pdfButton) return;
+
+      const textKey = {
+        idle: "downloadResume",
+        loading: "loadingPdf",
+        generating: "generatingPdf"
+      }[pdfButtonState] || "downloadResume";
+
+      pdfButton.textContent = getDynamicText(textKey);
+    }
+
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`Failed to load ${src}`));
+        document.head.appendChild(script);
+      });
+    }
+
+    async function loadPdfLibraries() {
+      if (window.html2canvas && window.jspdf?.jsPDF) return;
+
+      if (!pdfLibrariesPromise) {
+        pdfLibrariesPromise = (async () => {
+          if (!window.html2canvas) {
+            await loadScript("https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js");
+          }
+          if (!window.jspdf?.jsPDF) {
+            await loadScript("https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js");
+          }
+        })().catch((error) => {
+          pdfLibrariesPromise = null;
+          throw error;
+        });
+      }
+
+      await pdfLibrariesPromise;
+    }
+
     async function downloadResumePdf() {
-      const JsPDF = window.jspdf?.jsPDF;
-      if (!pdfResume || !window.html2canvas || !JsPDF) {
-        showToast("PDF 工具仍在加载，请稍后再试");
+      if (!pdfResume) {
+        showToast(getDynamicText("pdfFailed"));
         return;
       }
 
-      const originalText = pdfButton?.textContent || "下载简历";
       if (pdfButton) {
+        pdfButtonState = "loading";
         pdfButton.disabled = true;
-        pdfButton.textContent = "生成中...";
+        updatePdfButtonText();
       }
 
       const a4WidthPx = 794;
@@ -2811,33 +3397,46 @@
       const pxToMmX = a4WidthMm / a4WidthPx;
       const pxToMmY = a4HeightMm / a4HeightPx;
 
-      const renderHost = document.createElement("div");
-      const renderSource = pdfResume.cloneNode(true);
-      renderSource.removeAttribute("id");
-      renderSource.setAttribute("aria-hidden", "true");
-      renderHost.style.position = "fixed";
-      renderHost.style.left = "0";
-      renderHost.style.top = "0";
-      renderHost.style.width = `${a4WidthPx}px`;
-      renderHost.style.height = `${a4HeightPx}px`;
-      renderHost.style.zIndex = "2147483647";
-      renderHost.style.background = "#ffffff";
-      renderHost.style.pointerEvents = "none";
-      renderHost.style.overflow = "hidden";
-      renderSource.style.position = "static";
-      renderSource.style.left = "auto";
-      renderSource.style.top = "auto";
-      renderSource.style.width = `${a4WidthPx}px`;
-      renderSource.style.height = `${a4HeightPx}px`;
-      renderSource.style.margin = "0";
-      renderSource.style.transform = "none";
-      renderSource.style.opacity = "1";
-      renderSource.style.visibility = "visible";
-      renderSource.style.pointerEvents = "none";
-      renderHost.appendChild(renderSource);
-      document.body.appendChild(renderHost);
+      let renderHost = null;
 
       try {
+        await loadPdfLibraries();
+        const JsPDF = window.jspdf?.jsPDF;
+        if (!window.html2canvas || !JsPDF) {
+          throw new Error("PDF libraries unavailable");
+        }
+
+        if (pdfButton) {
+          pdfButtonState = "generating";
+          updatePdfButtonText();
+        }
+
+        renderHost = document.createElement("div");
+        const renderSource = pdfResume.cloneNode(true);
+        renderSource.removeAttribute("id");
+        renderSource.setAttribute("aria-hidden", "true");
+        renderHost.style.position = "fixed";
+        renderHost.style.left = "0";
+        renderHost.style.top = "0";
+        renderHost.style.width = `${a4WidthPx}px`;
+        renderHost.style.height = `${a4HeightPx}px`;
+        renderHost.style.zIndex = "2147483647";
+        renderHost.style.background = "#ffffff";
+        renderHost.style.pointerEvents = "none";
+        renderHost.style.overflow = "hidden";
+        renderSource.style.position = "static";
+        renderSource.style.left = "auto";
+        renderSource.style.top = "auto";
+        renderSource.style.width = `${a4WidthPx}px`;
+        renderSource.style.height = `${a4HeightPx}px`;
+        renderSource.style.margin = "0";
+        renderSource.style.transform = "none";
+        renderSource.style.opacity = "1";
+        renderSource.style.visibility = "visible";
+        renderSource.style.pointerEvents = "none";
+        renderHost.appendChild(renderSource);
+        document.body.appendChild(renderHost);
+
         if (document.fonts?.ready) {
           await document.fonts.ready;
         }
@@ -2887,15 +3486,16 @@
           );
         });
 
-        pdf.save("黄志铭-单页简历.pdf");
-        showToast("PDF 已生成");
+        pdf.save(getDynamicText("resumeFilename"));
+        showToast(getDynamicText("pdfGenerated"));
       } catch {
-        showToast("PDF 生成失败，请刷新后重试");
+        showToast(pdfLibrariesPromise ? getDynamicText("pdfFailed") : getDynamicText("pdfLoadingFailed"));
       } finally {
-        renderHost.remove();
+        renderHost?.remove();
         if (pdfButton) {
+          pdfButtonState = "idle";
           pdfButton.disabled = false;
-          pdfButton.textContent = originalText;
+          updatePdfButtonText();
         }
       }
     }
@@ -2907,9 +3507,9 @@
         const value = element.getAttribute("data-copy");
         try {
           await navigator.clipboard.writeText(value);
-          showToast("已复制：" + value);
+          showToast(getDynamicText("copiedPrefix") + value);
         } catch {
-          showToast("复制失败，请手动复制");
+          showToast(getDynamicText("copyFailed"));
         }
       });
     });
