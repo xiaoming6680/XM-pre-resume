@@ -1,6 +1,6 @@
-# AI Resume Portfolio
+# XM-pre-resume
 
-这是一个单文件静态个人主页型网页简历，用来展示我的学习路径、课程项目、技能工具、内容平台入口和个人联系方式。页面整体采用黑白高对比、暗色玻璃导航、卡片式项目展示、图片渐变过渡和底部动态光晕效果。
+XM-pre-resume 是一个单文件静态个人主页型网页简历，用来展示我的学习路径、课程项目、技能工具、内容平台入口和个人联系方式。页面整体采用黑白高对比、暗色玻璃导航、卡片式项目展示、图片渐变过渡和底部动态光晕效果。
 
 ## 项目亮点
 
@@ -41,32 +41,6 @@
 
 ```powershell
 Start-Process .\index.html
-```
-
-## 发布到 GitHub Pages
-
-1. 在 GitHub 新建仓库，推荐名称：`ai-resume-portfolio`。
-2. 将本项目文件提交到仓库。
-3. 在仓库页面进入 `Settings` -> `Pages`。
-4. Source 选择 `Deploy from a branch`。
-5. Branch 选择 `main`，目录选择 `/root`。
-6. 保存后等待 GitHub Pages 构建完成。
-
-常用提交命令：
-
-```powershell
-git add index.html README.md "W to B.png" "B to W.png" PRDs design
-git commit -m "Add static resume website"
-git branch -M main
-git remote add origin https://github.com/<your-username>/ai-resume-portfolio.git
-git push -u origin main
-```
-
-如果已经添加过远程仓库，可以改用：
-
-```powershell
-git remote set-url origin https://github.com/<your-username>/ai-resume-portfolio.git
-git push -u origin main
 ```
 
 ## 素材和说明
