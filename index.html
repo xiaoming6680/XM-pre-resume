@@ -217,7 +217,7 @@
 
     .nav-links {
       gap: 20px;
-      overflow-x: auto;
+      overflow: visible;
       scrollbar-width: none;
     }
 
@@ -227,9 +227,14 @@
 
     .nav-link {
       position: relative;
-      padding-right: 0;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
       color: var(--muted);
       font-size: 17px;
+      line-height: 1.2;
       font-weight: 750;
       white-space: nowrap;
       transition: color 180ms ease;
@@ -240,17 +245,26 @@
       color: var(--white);
     }
 
-    .nav-link.active::after {
-      content: "";
+    .nav-dot {
       position: absolute;
       left: 50%;
-      bottom: -10px;
-      width: 5px;
-      height: 5px;
-      transform: translateX(-50%);
+      bottom: -6px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 14px rgba(76, 255, 176, 0.86);
+      box-shadow:
+        0 0 10px rgba(76, 255, 176, 1),
+        0 0 20px rgba(76, 255, 176, 0.68);
+      opacity: 0;
+      transform: translateX(-50%) scale(0.45);
+      transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
+    }
+
+    .nav-link.active .nav-dot {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
     }
 
     .nav-right {
@@ -376,6 +390,12 @@
       display: block;
     }
 
+    .hero-title span + span {
+      margin-top: 10px;
+      font-size: clamp(44px, 6.1vw, 88px);
+      line-height: 1.02;
+    }
+
     .hero-subtitle {
       max-width: 790px;
       margin: 30px 0 0;
@@ -383,6 +403,29 @@
       font-size: clamp(20px, 2.1vw, 30px);
       line-height: 1.52;
       font-weight: 650;
+    }
+
+    .pdf-download {
+      white-space: nowrap;
+      border: 1px solid rgba(76,255,176,0.38);
+      background: rgba(76,255,176,0.12);
+      color: var(--white);
+      padding-inline: 15px;
+      font-weight: 950;
+      box-shadow: 0 0 0 1px rgba(76,255,176,0.04), 0 0 28px rgba(76,255,176,0.16);
+    }
+
+    .pdf-download:hover,
+    .pdf-download:focus-visible {
+      border-color: rgba(76,255,176,0.62);
+      background: rgba(76,255,176,0.18);
+      box-shadow: 0 0 0 1px rgba(76,255,176,0.08), 0 0 34px rgba(76,255,176,0.24);
+    }
+
+    .pdf-download:disabled {
+      cursor: progress;
+      opacity: 0.62;
+      transform: none;
     }
 
     .hero-cards {
@@ -1452,6 +1495,146 @@
       transform: translate(-50%, 0);
     }
 
+    .pdf-resume {
+      position: fixed;
+      left: -10000px;
+      top: 0;
+      width: 794px;
+      height: 1123px;
+      padding: 45px 49px;
+      background: #fff;
+      color: #141414;
+      font-family: "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      font-size: 12.5px;
+      line-height: 1.38;
+      letter-spacing: 0;
+      box-shadow: none;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .pdf-resume * {
+      box-sizing: border-box;
+    }
+
+    .pdf-resume a {
+      color: #0b57d0;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .pdf-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 38px;
+      padding-bottom: 19px;
+      border-bottom: 1px solid #d8d8d8;
+    }
+
+    .pdf-header h1 {
+      margin: 0;
+      color: #111;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    .pdf-position {
+      margin: 11px 0 0;
+      max-width: 446px;
+      color: #333;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .pdf-contact {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+      color: #333;
+      font-size: 11px;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .pdf-section {
+      margin-top: 19px;
+    }
+
+    .pdf-section h2 {
+      margin: 0 0 9px;
+      color: #111;
+      font-size: 14.5px;
+      line-height: 1.1;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .pdf-item {
+      margin-top: 10px;
+    }
+
+    .pdf-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      color: #111;
+      font-weight: 800;
+    }
+
+    .pdf-meta {
+      flex: 0 0 auto;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .pdf-item p,
+    .pdf-item ul {
+      margin: 5px 0 0;
+      color: #3f3f3f;
+    }
+
+    .pdf-item ul {
+      padding-left: 15px;
+    }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px 26px;
+    }
+
+    .pdf-project {
+      break-inside: avoid;
+    }
+
+    .pdf-project strong {
+      color: #111;
+      font-weight: 800;
+    }
+
+    .pdf-url {
+      margin-left: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .pdf-skill-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 30px;
+      margin: 0;
+      padding-left: 15px;
+      color: #333;
+    }
+
+    .pdf-note {
+      margin-top: 15px;
+      color: #666;
+      font-size: 10.5px;
+    }
+
     @media (max-width: 1100px) {
       .glass-card {
         width: min(310px, 32vw);
@@ -1513,6 +1696,10 @@
       .hero {
         min-height: auto;
         padding: 112px 0 130px;
+      }
+
+      .hero-title span + span {
+        font-size: clamp(38px, 9vw, 58px);
       }
 
       .hero-cards {
@@ -1654,6 +1841,10 @@
         font-size: clamp(42px, 12.5vw, 62px);
       }
 
+      .hero-title span + span {
+        font-size: clamp(34px, 9.6vw, 48px);
+      }
+
       .hero-subtitle {
         font-size: 18px;
       }
@@ -1722,11 +1913,11 @@
       </a>
       <span class="divider" aria-hidden="true"></span>
       <div class="nav-links">
-        <a class="nav-link active" href="#work">项目</a>
-        <a class="nav-link" href="#story">关于我</a>
-        <a class="nav-link" href="#study">学习路径</a>
-        <a class="nav-link" href="#skills">技能工具</a>
-        <a class="nav-link" href="#life">生活平台</a>
+        <a class="nav-link active" href="#work"><span>项目</span><span class="nav-dot" aria-hidden="true"></span></a>
+        <a class="nav-link" href="#story"><span>关于我</span><span class="nav-dot" aria-hidden="true"></span></a>
+        <a class="nav-link" href="#study"><span>学习路径</span><span class="nav-dot" aria-hidden="true"></span></a>
+        <a class="nav-link" href="#skills"><span>技能工具</span><span class="nav-dot" aria-hidden="true"></span></a>
+        <a class="nav-link" href="#life"><span>生活平台</span><span class="nav-dot" aria-hidden="true"></span></a>
       </div>
     </div>
     <div class="nav-right">
@@ -1734,6 +1925,7 @@
       <a class="nav-action icon" href="https://github.com/xiaoming6680?tab=repositories" target="_blank" rel="noreferrer" aria-label="打开 GitHub">GitHub</a>
       <a class="nav-action icon" href="https://space.bilibili.com/275188875" target="_blank" rel="noreferrer" aria-label="打开 B 站">B站</a>
       <button class="nav-action icon" type="button" data-copy="2724153495@qq.com" aria-label="复制邮箱">邮箱</button>
+      <button class="nav-action pdf-download" id="download-pdf" type="button">下载简历</button>
     </div>
   </nav>
 
@@ -1744,9 +1936,9 @@
           <div class="status">悉尼 · UTS 人工智能本科 · 大一在读</div>
           <h1 class="hero-title">
             <span>黄志铭</span>
-            <span>正在把想法做成项目</span>
+            <span>把想法做成能用的项目</span>
           </h1>
-          <p class="hero-subtitle">我在 UTS 学习人工智能，关注 AI 应用、软件开发和 Minecraft 工具开发。这个页面用来记录我的课程项目、个人工具和技术成长。</p>
+          <p class="hero-subtitle">我在 UTS 学习人工智能，正在用课程项目和个人工具练习软件开发、数据库建模与 Minecraft 工具开发。这个页面记录我的学习路径、项目作品和技术成长。</p>
         </div>
 
         <div class="hero-cards appear" aria-label="主页入口">
@@ -1792,8 +1984,8 @@
 
     <section class="section light">
       <div class="inner" id="work">
-        <h2 class="section-title appear">我正在积累什么</h2>
-        <p class="section-lead appear">目前我还在本科大一阶段，所以这里展示的不是夸大的履历，而是正在形成的学习能力、项目能力和长期更新的作品集。</p>
+        <h2 class="section-title appear">我正在积累的能力</h2>
+        <p class="section-lead appear">我还在本科早期阶段，这里不包装成成熟履历，而是记录正在形成的学习能力、项目能力和持续更新的作品集。</p>
 
         <div class="metric-grid">
           <article class="metric appear">
@@ -1815,7 +2007,7 @@
 
         <div class="needle">
           <div>
-            <h2 class="section-title appear">我如何推进学习和项目</h2>
+            <h2 class="section-title appear">我怎么把学习变成项目</h2>
             <div class="ability-list">
               <article class="ability appear">
                 <h3>把课程知识落到项目里</h3>
@@ -1827,7 +2019,7 @@
               </article>
               <article class="ability appear">
                 <h3>持续整理文档</h3>
-                <p>项目还不是最终版，后续会补齐截图、仓库链接、说明文档和演示内容。</p>
+                <p>每个项目都会继续补齐截图、仓库链接、说明文档和演示内容，方便回看和展示。</p>
               </article>
               <article class="ability appear">
                 <h3>保持基础阶段的真实表达</h3>
@@ -1839,8 +2031,8 @@
         </div>
 
         <div class="projects-head">
-          <h2 class="section-title appear">我正在做的作品</h2>
-          <p class="section-lead appear">作品区以项目网格呈现。已经有明确方向的项目优先展示，暂时没有完整截图或链接的地方保留占位。</p>
+          <h2 class="section-title appear">正在打磨的项目</h2>
+          <p class="section-lead appear">这里优先展示已经有明确方向的课程项目和个人工具。真实链接、截图和说明会随着项目进展继续补齐。</p>
         </div>
 
         <div class="project-grid">
@@ -1863,7 +2055,7 @@
               </div>
             </div>
             <div class="project-body">
-              <p>面向 Minecraft 好友服务器的游戏内控制菜单，用于提升朋友服管理和互动体验。</p>
+              <p>面向 Minecraft 好友服务器的游戏内控制菜单，让常用管理和互动功能更集中、更好用。</p>
               <div class="tags">
                 <span class="tag">Java</span>
                 <span class="tag">Minecraft Fabric</span>
@@ -1893,7 +2085,7 @@
               </div>
             </div>
             <div class="project-body">
-              <p>用于生成新版 Minecraft 物品附魔指令的可视化网页工具，减少手动输入复杂命令时的错误。</p>
+              <p>可视化生成新版 Minecraft 物品附魔指令，减少手写复杂命令时的格式错误。</p>
               <div class="tags">
                 <span class="tag">网页工具</span>
                 <span class="tag">JavaScript</span>
@@ -1916,7 +2108,7 @@
               </div>
             </div>
             <div class="project-body">
-              <p>围绕健康管理应用进行数据库建模，设计用户、饮食、运动、目标和日志等结构。</p>
+              <p>围绕健康管理应用做数据库建模，梳理用户、饮食、运动、目标和日志之间的关系。</p>
               <div class="tags"><span class="tag">ERD</span><span class="tag">SQL</span><span class="tag">数据库设计</span></div>
             </div>
           </article>
@@ -1935,7 +2127,7 @@
               </div>
             </div>
             <div class="project-body">
-              <p>使用 Java 实现简单商店管理系统，练习面向对象编程和控制台交互。</p>
+              <p>使用 Java 实现简单商店管理系统，练习面向对象、控制台交互和基础业务逻辑。</p>
               <div class="tags"><span class="tag">Java</span><span class="tag">面向对象</span><span class="tag">控制台程序</span></div>
             </div>
           </article>
@@ -1955,7 +2147,7 @@
               </div>
             </div>
             <div class="project-body">
-              <p>基于 JavaFX 和 FXML 搭建图形界面，连接前端界面与后端模型类。</p>
+              <p>用 JavaFX 和 FXML 搭建商店管理界面，练习界面布局、事件绑定和后端模型连接。</p>
               <div class="tags"><span class="tag">JavaFX</span><span class="tag">FXML</span><span class="tag">MVC</span></div>
             </div>
           </article>
@@ -1974,7 +2166,7 @@
               </div>
             </div>
             <div class="project-body">
-              <p>项目区不是最终版，后续会补齐真实仓库链接、截图、演示视频或在线访问地址。</p>
+              <p>后续会继续补充新的课程项目、个人工具、真实截图和在线演示地址。</p>
               <div class="tags"><span class="tag">截图待补充</span><span class="tag">仓库待补充</span></div>
             </div>
           </article>
@@ -1984,8 +2176,8 @@
 
     <section class="section dark">
       <div class="inner" id="story">
-        <h2 class="section-title appear">我如何找到方向</h2>
-        <p class="section-lead appear">这部分对应参考网站里的个人故事区。我的版本不写夸张经历，只写现在真实的学习阶段、探索过程和下一步目标。</p>
+        <h2 class="section-title appear">我怎么找到方向</h2>
+        <p class="section-lead appear">这里记录真实的学习阶段、探索过程和下一步目标，不虚构经历，也不把大一阶段包装成成熟工作履历。</p>
 
         <div class="story-layout">
           <div class="story-text">
@@ -2020,8 +2212,8 @@
           <article class="timeline-item appear">
             <div class="timeline-time">当前说明</div>
             <div>
-              <h3>不虚构经历</h3>
-              <p>目前暂无正式实习、兼职、社团或志愿者经历。后续如果有真实经历，再加入时间线。</p>
+              <h3>保持真实更新</h3>
+              <p>目前暂无正式实习、兼职、社团或志愿者经历。后续有真实经历后，再加入这条时间线。</p>
             </div>
           </article>
         </div>
@@ -2030,8 +2222,8 @@
 
     <section class="section light">
       <div class="inner" id="skills">
-        <h2 class="section-title appear">技能和背书</h2>
-        <p class="section-lead appear">这里用图表和标签呈现技能，不写成纯文字列表。当前技能只表达基础掌握和持续学习中。</p>
+        <h2 class="section-title appear">技能与证明</h2>
+        <p class="section-lead appear">这里用图表、标签和卡片整理当前能力。技能只表达基础掌握和持续学习中，后续会用真实项目和反馈补充证明。</p>
         <div class="needle">
           <div class="ability-list">
             <article class="ability appear">
@@ -2050,8 +2242,8 @@
               <div class="tags"><span class="tag">GitHub</span><span class="tag">JavaFX</span><span class="tag">Fabric</span><span class="tag">Office</span></div>
             </article>
             <article class="ability appear">
-              <h3>推荐评价占位</h3>
-              <p>目前暂无正式推荐语，后续可补充任课老师、小组成员、项目协作者、GitHub 或 B 站社区反馈。</p>
+              <h3>后续补充评价</h3>
+              <p>目前暂无正式推荐语，后续会补充任课老师、小组成员、项目协作者或社区反馈。</p>
             </article>
           </div>
           <div class="dial appear" aria-label="技能图表"></div>
@@ -2061,8 +2253,8 @@
 
     <section class="section dark">
       <div class="inner" id="life">
-        <h2 class="section-title appear">我的世界长什么样</h2>
-        <p class="section-lead appear">这里放内容输出和个人平台入口。GitHub 和 B 站是当前已有入口，小红书和公众号暂时保留占位。</p>
+        <h2 class="section-title appear">我在哪里更新</h2>
+        <p class="section-lead appear">这里是内容输出和个人平台入口。GitHub 和 B 站是当前已有入口，小红书和公众号暂时作为未来占位。</p>
 
         <div class="platform-grid">
           <a class="platform appear" href="https://github.com/xiaoming6680?tab=repositories" target="_blank" rel="noreferrer">
@@ -2071,7 +2263,7 @@
                 <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="GitHub Logo">
               </div>
               <h3>GitHub</h3>
-              <p>技术项目展示平台，用来整理课程项目、Minecraft 相关项目、工具项目和编程学习记录。</p>
+              <p>整理课程项目、Minecraft 相关项目、工具项目和编程学习记录。</p>
               <div class="tags"><span class="tag">课程项目</span><span class="tag">工具项目</span><span class="tag">学习记录</span></div>
             </div>
             <div class="platform-footer"><span>打开仓库列表</span><span>↗</span></div>
@@ -2083,7 +2275,7 @@
                 <img src="https://cdn.simpleicons.org/bilibili/00AEEF" alt="B站 Logo">
               </div>
               <h3>B 站</h3>
-              <p>个人内容平台入口，后续可记录 UTS 留学生活、AI 专业学习、编程学习和 Minecraft MOD 开发过程。</p>
+              <p>后续会记录 UTS 留学生活、AI 专业学习、编程学习和 Minecraft MOD 开发过程。</p>
               <div class="tags"><span class="tag">留学生活</span><span class="tag">学习记录</span><span class="tag">游戏内容</span></div>
             </div>
             <div class="platform-footer"><span>打开个人空间</span><span>↗</span></div>
@@ -2095,7 +2287,7 @@
                 <img src="https://cdn.simpleicons.org/xiaohongshu/FF2442" alt="小红书 Logo">
               </div>
               <h3>小红书</h3>
-              <p>当前暂无，保留未来入口。内容方向可包括留学生活、学习记录和项目展示。</p>
+              <p>未来用于更新留学生活、学习记录和项目展示。</p>
               <div class="tags"><span class="tag">待补充</span><span class="tag">生活记录</span></div>
             </div>
             <div class="platform-footer"><span>暂未开放</span><span>锁定</span></div>
@@ -2107,7 +2299,7 @@
                 <img src="https://cdn.simpleicons.org/wechat/07C160" alt="微信 Logo">
               </div>
               <h3>公众号</h3>
-              <p>当前暂无，保留未来入口。内容方向可包括长期学习记录、项目总结和技术文章。</p>
+              <p>未来用于沉淀长期学习记录、项目总结和技术文章。</p>
               <div class="tags"><span class="tag">待补充</span><span class="tag">技术文章</span></div>
             </div>
             <div class="platform-footer"><span>暂未开放</span><span>锁定</span></div>
@@ -2116,12 +2308,12 @@
 
         <div class="quotes">
           <article class="quote-card appear">
-            <p>“这里预留给任课老师、小组成员或项目协作者的真实评价。没有正式评价前，不虚构内容。”</p>
-            <strong>推荐评价占位</strong>
+            <p>“真实评价会在获得授权后补充。在此之前，只保留当前学习和项目进展。”</p>
+            <strong>推荐评价</strong>
           </article>
           <article class="quote-card appear">
-            <p>“这里预留给 GitHub 项目反馈、B 站观众反馈或社区反馈。后续有真实内容后再替换。”</p>
-            <strong>社区反馈占位</strong>
+            <p>“后续会补充 GitHub 项目反馈、B 站观众反馈或其他社区反馈。”</p>
+            <strong>社区反馈</strong>
           </article>
         </div>
       </div>
@@ -2131,7 +2323,7 @@
       <div class="inner appear" id="contact">
         <h2>一起做点东西？</h2>
         <button class="contact-card" type="button" data-copy="2724153495@qq.com">打个招呼</button>
-        <p class="contact-copy">可以交流 AI / IT 学习、软件开发入门项目、Minecraft MOD / 工具开发、数据库课程项目、留学生学习经验或个人主页型简历建议。</p>
+        <p class="contact-copy">可以交流 AI / IT 学习、软件开发入门项目、Minecraft MOD / 工具开发、数据库课程项目、留学学习经验，或一起改进这个个人主页。</p>
         <div class="contact-actions">
           <button class="pill" type="button" data-copy="2724153495@qq.com">复制邮箱</button>
           <button class="pill" type="button" data-copy="+86 18961855755">复制手机号</button>
@@ -2143,6 +2335,73 @@
     </section>
   </main>
 
+  <section class="pdf-resume" id="pdf-resume" aria-label="A4 单页简历 PDF 模板">
+    <header class="pdf-header">
+      <div>
+        <h1>黄志铭</h1>
+        <p class="pdf-position">UTS 人工智能本科在读，关注 AI 应用、软件开发、数据库建模和 Minecraft 工具开发。</p>
+      </div>
+      <div class="pdf-contact">
+        <a href="mailto:2724153495@qq.com">2724153495@qq.com</a>
+        <a href="tel:+8618961855755">+86 18961855755</a>
+        <a href="https://github.com/xiaoming6680" target="_blank" rel="noreferrer">github.com/xiaoming6680</a>
+        <a href="https://space.bilibili.com/275188875" target="_blank" rel="noreferrer">space.bilibili.com/275188875</a>
+      </div>
+    </header>
+
+    <section class="pdf-section">
+      <h2>经历和履历</h2>
+      <article class="pdf-item">
+        <div class="pdf-row">
+          <strong>悉尼科技大学 University of Technology Sydney</strong>
+          <span class="pdf-meta">2025.06 - 至今</span>
+        </div>
+        <p>人工智能学士，本科大一在读。当前学习方向包括 Java、Python、SQL、数据库设计、离散数学、计算机网络和 AI 基础课程。</p>
+      </article>
+      <article class="pdf-item">
+        <div class="pdf-row">
+          <strong>课程项目与个人工具实践</strong>
+          <span class="pdf-meta">持续更新</span>
+        </div>
+        <p>把课程知识落到可展示项目中，包括数据库建模、Java 控制台系统、JavaFX 图形界面项目和 Minecraft 相关工具。</p>
+      </article>
+    </section>
+
+    <section class="pdf-section">
+      <h2>重点作品</h2>
+      <div class="pdf-grid">
+        <article class="pdf-project">
+          <strong>Minecraft 好友服控制菜单 MOD</strong>
+          <a class="pdf-url" href="https://github.com/xiaoming6680" target="_blank" rel="noreferrer">github.com/xiaoming6680</a>
+          <p>面向好友服务器的游戏内控制菜单，让常用管理和互动功能更集中、更好用。</p>
+        </article>
+        <article class="pdf-project">
+          <strong>Minecraft 附魔指令生成器</strong>
+          <a class="pdf-url" href="https://github.com/xiaoming6680" target="_blank" rel="noreferrer">github.com/xiaoming6680</a>
+          <p>可视化生成新版 Minecraft 物品附魔命令，减少手写复杂命令时的格式错误。</p>
+        </article>
+        <article class="pdf-project">
+          <strong>JavaFX 图形界面商店系统</strong>
+          <a class="pdf-url" href="https://github.com/xiaoming6680" target="_blank" rel="noreferrer">github.com/xiaoming6680</a>
+          <p>用 JavaFX 和 FXML 搭建商店管理界面，练习界面布局、事件绑定和后端模型连接。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="pdf-section">
+      <h2>核心技能</h2>
+      <ul class="pdf-skill-list">
+        <li>编程：Java、Python、JavaScript、HTML / CSS</li>
+        <li>数据库：SQL、ERD、关系型数据建模、业务规则分析</li>
+        <li>界面开发：JavaFX、FXML、基础响应式网页</li>
+        <li>工具平台：GitHub、VS Code、JDK、Office、Minecraft Fabric</li>
+        <li>项目能力：需求拆解、文档整理、课程项目落地</li>
+        <li>语言与学习环境：英文授课环境下持续学习计算机和 AI 基础</li>
+      </ul>
+      <p class="pdf-note">说明：当前简历用于传统投递场景，保留核心信息；完整作品展示和后续更新见在线主页。</p>
+    </section>
+  </section>
+
   <footer class="footer">
     <span>© 2026 黄志铭</span>
     <span>个人主页型网页简历，持续更新中。</span>
@@ -2150,16 +2409,47 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
 
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script>
     const body = document.body;
     const root = document.documentElement;
     const toast = document.getElementById("toast");
     const compass = document.querySelector(".mark");
     const contactSection = document.querySelector(".contact");
+    const pdfButton = document.getElementById("download-pdf");
+    const pdfResume = document.getElementById("pdf-resume");
+    const links = Array.from(document.querySelectorAll(".nav-link"));
+    const map = links.map((link) => {
+      const id = link.getAttribute("href").slice(1);
+      return { link, section: document.getElementById(id) };
+    }).filter((item) => item.section);
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    function alignToHashTarget() {
+      if (!window.location.hash) return;
+
+      const target = document.getElementById(window.location.hash.slice(1));
+      if (!target) return;
+
+      const top = target.getBoundingClientRect().top + window.scrollY - 112;
+      window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+    }
+
     window.addEventListener("load", () => {
-      requestAnimationFrame(() => body.classList.remove("loading"));
+      requestAnimationFrame(() => {
+        body.classList.remove("loading");
+        alignToHashTarget();
+        updateScrollEffects();
+        setTimeout(updateScrollEffects, 180);
+      });
+    });
+
+    window.addEventListener("hashchange", () => {
+      requestAnimationFrame(() => {
+        alignToHashTarget();
+        updateScrollEffects();
+      });
     });
 
     function updateCompass() {
@@ -2192,9 +2482,27 @@
       root.style.setProperty("--bottom-glow-scale", (0.72 + eased * 0.34).toFixed(3));
     }
 
+    function updateActiveNav() {
+      if (!map.length) return;
+
+      const marker = window.scrollY + Math.min(window.innerHeight * 0.42, 420);
+      let active = map[0];
+
+      map.forEach((item) => {
+        const top = item.section.getBoundingClientRect().top + window.scrollY;
+        if (top <= marker) {
+          active = item;
+        }
+      });
+
+      links.forEach((link) => link.classList.remove("active"));
+      active.link.classList.add("active");
+    }
+
     function updateScrollEffects() {
       updateCompass();
       updateBottomGlow();
+      updateActiveNav();
     }
 
     let compassTicking = false;
@@ -2226,6 +2534,117 @@
 
     document.querySelectorAll(".appear").forEach((element) => revealObserver.observe(element));
 
+    async function downloadResumePdf() {
+      const JsPDF = window.jspdf?.jsPDF;
+      if (!pdfResume || !window.html2canvas || !JsPDF) {
+        showToast("PDF 工具仍在加载，请稍后再试");
+        return;
+      }
+
+      const originalText = pdfButton?.textContent || "下载简历";
+      if (pdfButton) {
+        pdfButton.disabled = true;
+        pdfButton.textContent = "生成中...";
+      }
+
+      const a4WidthPx = 794;
+      const a4HeightPx = 1123;
+      const a4WidthMm = 210;
+      const a4HeightMm = 297;
+      const pxToMmX = a4WidthMm / a4WidthPx;
+      const pxToMmY = a4HeightMm / a4HeightPx;
+
+      const renderHost = document.createElement("div");
+      const renderSource = pdfResume.cloneNode(true);
+      renderSource.removeAttribute("id");
+      renderSource.setAttribute("aria-hidden", "true");
+      renderHost.style.position = "fixed";
+      renderHost.style.left = "0";
+      renderHost.style.top = "0";
+      renderHost.style.width = `${a4WidthPx}px`;
+      renderHost.style.height = `${a4HeightPx}px`;
+      renderHost.style.zIndex = "2147483647";
+      renderHost.style.background = "#ffffff";
+      renderHost.style.pointerEvents = "none";
+      renderHost.style.overflow = "hidden";
+      renderSource.style.position = "static";
+      renderSource.style.left = "auto";
+      renderSource.style.top = "auto";
+      renderSource.style.width = `${a4WidthPx}px`;
+      renderSource.style.height = `${a4HeightPx}px`;
+      renderSource.style.margin = "0";
+      renderSource.style.transform = "none";
+      renderSource.style.opacity = "1";
+      renderSource.style.visibility = "visible";
+      renderSource.style.pointerEvents = "none";
+      renderHost.appendChild(renderSource);
+      document.body.appendChild(renderHost);
+
+      try {
+        if (document.fonts?.ready) {
+          await document.fonts.ready;
+        }
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+        const canvas = await window.html2canvas(renderSource, {
+          backgroundColor: "#ffffff",
+          scale: 2,
+          useCORS: true,
+          width: a4WidthPx,
+          height: a4HeightPx,
+          windowWidth: a4WidthPx,
+          windowHeight: a4HeightPx,
+          scrollX: -window.scrollX,
+          scrollY: -window.scrollY
+        });
+
+        const pdf = new JsPDF({
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+          compress: true
+        });
+
+        pdf.addImage(
+          canvas.toDataURL("image/jpeg", 0.98),
+          "JPEG",
+          0,
+          0,
+          a4WidthMm,
+          a4HeightMm,
+          undefined,
+          "FAST"
+        );
+
+        const sourceRect = renderSource.getBoundingClientRect();
+        renderSource.querySelectorAll("a[href]").forEach((anchor) => {
+          const rect = anchor.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+
+          pdf.link(
+            (rect.left - sourceRect.left) * pxToMmX,
+            (rect.top - sourceRect.top) * pxToMmY,
+            rect.width * pxToMmX,
+            rect.height * pxToMmY,
+            { url: anchor.href }
+          );
+        });
+
+        pdf.save("黄志铭-单页简历.pdf");
+        showToast("PDF 已生成");
+      } catch {
+        showToast("PDF 生成失败，请刷新后重试");
+      } finally {
+        renderHost.remove();
+        if (pdfButton) {
+          pdfButton.disabled = false;
+          pdfButton.textContent = originalText;
+        }
+      }
+    }
+
+    pdfButton?.addEventListener("click", downloadResumePdf);
+
     document.querySelectorAll("[data-copy]").forEach((element) => {
       element.addEventListener("click", async () => {
         const value = element.getAttribute("data-copy");
@@ -2245,28 +2664,6 @@
       showToast.timer = setTimeout(() => toast.classList.remove("show"), 1800);
     }
 
-    const links = Array.from(document.querySelectorAll(".nav-link"));
-    const map = links.map((link) => {
-      const id = link.getAttribute("href").slice(1);
-      return { link, section: document.getElementById(id) };
-    }).filter((item) => item.section);
-
-    const navObserver = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-      if (!visible) return;
-
-      map.forEach((item) => item.link.classList.remove("active"));
-      const active = map.find((item) => item.section === visible.target);
-      active?.link.classList.add("active");
-    }, {
-      rootMargin: "-42% 0px -45% 0px",
-      threshold: [0.12, 0.28, 0.45]
-    });
-
-    map.forEach((item) => navObserver.observe(item.section));
   </script>
 </body>
 </html>
