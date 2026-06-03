@@ -162,7 +162,7 @@
       left: 50%;
       top: 50%;
       z-index: 3;
-      width: 10px;
+      width: 28px;
       height: 28px;
       transform: translate(-50%, -50%) rotate(var(--compass-angle));
       transform-origin: 50% 50%;
@@ -175,6 +175,7 @@
       content: "";
       position: absolute;
       left: 50%;
+      top: 50%;
       width: 0;
       height: 0;
       transform: translateX(-50%);
@@ -189,7 +190,7 @@
     }
 
     .compass-needle::after {
-      bottom: 0;
+      top: 50%;
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
       border-top: 14px solid rgba(255,255,255,0.88);
@@ -200,8 +201,8 @@
       left: 50%;
       top: 50%;
       z-index: 4;
-      width: 5px;
-      height: 5px;
+      width: 6px;
+      height: 6px;
       transform: translate(-50%, -50%);
       border-radius: 50%;
       background: var(--white);
@@ -883,272 +884,172 @@
 
     .dial {
       position: relative;
-      width: min(430px, 100%);
+      width: min(420px, 100%);
       aspect-ratio: 1;
       margin: 0 auto;
       display: grid;
       place-items: center;
-      border-radius: 50%;
-      isolation: isolate;
-      perspective: 1000px;
+      overflow: hidden;
+      border: 1px solid var(--light-line);
+      border-radius: 18px;
       background:
-        radial-gradient(circle at 50% 46%, rgba(255,255,255,0.88) 0 16%, rgba(255,255,255,0.48) 24%, rgba(255,255,255,0.10) 34%, transparent 52%),
-        radial-gradient(circle at 52% 50%, rgba(76,255,176,0.12) 0 18%, rgba(76,255,176,0.06) 38%, transparent 64%),
-        radial-gradient(circle at 30% 22%, rgba(32,80,255,0.09) 0 14%, rgba(32,80,255,0.04) 34%, transparent 58%);
-    }
-
-    .dial::before,
-    .dial::after {
-      content: "";
-      position: absolute;
-      pointer-events: none;
+        linear-gradient(90deg, rgba(5,5,5,0.045) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(5,5,5,0.045) 1px, transparent 1px),
+        #ffffff;
+      background-size: 34px 34px, 34px 34px, auto;
+      box-shadow: 0 18px 44px rgba(0,0,0,0.08);
+      isolation: isolate;
     }
 
     .dial::before {
-      width: 64%;
-      height: 15%;
-      left: 18%;
-      bottom: 12%;
-      border-radius: 50%;
-      background:
-        radial-gradient(ellipse, rgba(0,0,0,0.24), rgba(0,0,0,0.10) 42%, transparent 70%);
-      filter: blur(10px);
-      transform-origin: center;
-      animation: sphereShadow 6s ease-in-out infinite;
-      z-index: 0;
-    }
-
-    .dial::after {
-      width: 78%;
-      height: 78%;
-      border-radius: 50%;
-      background:
-        linear-gradient(120deg, transparent 0 24%, rgba(255,255,255,0.08) 34%, rgba(255,255,255,0.58) 44%, rgba(76,255,176,0.18) 52%, rgba(255,255,255,0.06) 62%, transparent 76%),
-        radial-gradient(circle at 50% 50%, transparent 0 43%, rgba(255,255,255,0.10) 47%, rgba(255,255,255,0.38) 50%, rgba(255,255,255,0.10) 53%, transparent 58%);
-      opacity: 0.44;
-      transform: rotate(-18deg);
-      animation: sphereSweep 7s ease-in-out infinite;
-      z-index: 5;
-      mix-blend-mode: screen;
-    }
-
-    .sphere-core {
-      position: relative;
-      width: 62%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 32% 22%, rgba(255,255,255,0.98) 0 6%, rgba(255,255,255,0.78) 15%, rgba(255,255,255,0.30) 28%, transparent 48%),
-        radial-gradient(ellipse at 76% 78%, rgba(18,31,31,0.34) 0 10%, rgba(18,31,31,0.24) 24%, rgba(18,31,31,0.12) 43%, transparent 70%),
-        radial-gradient(ellipse at 64% 62%, rgba(8,26,25,0.16) 0 18%, rgba(8,26,25,0.08) 38%, transparent 72%),
-        radial-gradient(ellipse at 38% 46%, rgba(76,255,176,0.10) 0 22%, rgba(76,255,176,0.04) 48%, transparent 74%),
-        linear-gradient(145deg, #ffffff 0%, #f8faf8 14%, #eef2ee 31%, #d9ded9 48%, #b3bdb7 66%, #687275 86%, #242830 100%);
-      background-color: #c9d0cc;
-      box-shadow:
-        inset 34px 28px 52px rgba(255,255,255,0.68),
-        inset -36px -44px 62px rgba(0,0,0,0.38),
-        inset 0 0 0 1px rgba(255,255,255,0.72),
-        0 34px 74px rgba(0,0,0,0.24);
-      transform-style: preserve-3d;
-      animation: sphereFloat 6s ease-in-out infinite;
-      z-index: 3;
-    }
-
-    .sphere-core::before,
-    .sphere-core::after {
       content: "";
       position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(5,5,5,0.12);
       border-radius: 50%;
       pointer-events: none;
     }
 
-    .sphere-core::before {
-      inset: -12%;
-      background:
-        linear-gradient(90deg, transparent 0 15%, rgba(76,255,176,0.05) 17%, rgba(76,255,176,0.16) 20%, rgba(76,255,176,0.05) 23%, transparent 27% 40%, rgba(32,80,255,0.04) 42%, rgba(32,80,255,0.13) 45%, rgba(32,80,255,0.04) 48%, transparent 52% 100%),
-        linear-gradient(0deg, transparent 0 14%, rgba(255,255,255,0.06) 16%, rgba(255,255,255,0.18) 18%, rgba(255,255,255,0.05) 20%, transparent 23% 34%, rgba(5,5,5,0.04) 36%, rgba(5,5,5,0.13) 38%, rgba(5,5,5,0.04) 40%, transparent 44% 100%);
-      opacity: 0.38;
-      transform: rotate(-18deg);
-      animation: sphereSurface 11s linear infinite;
-      -webkit-mask-image: radial-gradient(circle, #000 0 67%, transparent 70%);
-      mask-image: radial-gradient(circle, #000 0 67%, transparent 70%);
-    }
-
-    .sphere-core::after {
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 23%, rgba(255,255,255,0.82) 0 8%, rgba(255,255,255,0.34) 19%, rgba(255,255,255,0.08) 36%, transparent 55%),
-        radial-gradient(ellipse at 76% 76%, rgba(0,0,0,0.20) 0 18%, rgba(0,0,0,0.11) 34%, rgba(0,0,0,0.04) 52%, transparent 75%),
-        radial-gradient(ellipse at 52% 74%, rgba(76,255,176,0.07) 0 22%, rgba(76,255,176,0.03) 44%, transparent 74%);
-      opacity: 0.88;
-      mix-blend-mode: normal;
-      z-index: 4;
-    }
-
-    .sphere-shine {
+    .flow-path {
       position: absolute;
-      inset: 0;
+      width: 68%;
+      aspect-ratio: 1;
+      border: 2px solid rgba(5,5,5,0.14);
       border-radius: 50%;
-      background: linear-gradient(110deg, transparent 0 22%, rgba(255,255,255,0.06) 34%, rgba(255,255,255,0.40) 46%, rgba(76,255,176,0.10) 56%, rgba(255,255,255,0.04) 66%, transparent 82%);
-      filter: blur(4px);
-      transform: translateX(-62%) rotate(7deg);
-      animation: sphereHighlight 5.6s ease-in-out infinite;
-      mix-blend-mode: screen;
-      z-index: 3;
+      pointer-events: none;
     }
 
-    .sphere-grid {
+    .flow-path::before,
+    .flow-path::after {
+      content: "";
       position: absolute;
-      inset: 12%;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.28);
-      background:
-        repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,0.12) 23px 24px),
-        repeating-linear-gradient(90deg, transparent 0 28px, rgba(5,5,5,0.12) 29px 30px);
-      opacity: 0.38;
-      transform: rotateX(58deg) rotateZ(-18deg);
-      animation: sphereGridTilt 6s ease-in-out infinite;
-      z-index: 2;
+      left: 50%;
+      top: 50%;
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
     }
 
-    .sphere-dither {
+    .flow-path::before {
+      width: 82%;
+      height: 1px;
+      background: rgba(5,5,5,0.10);
+    }
+
+    .flow-path::after {
+      width: 1px;
+      height: 82%;
+      background: rgba(5,5,5,0.10);
+    }
+
+    .flow-runner {
       position: absolute;
       inset: -1px;
       border-radius: 50%;
-      pointer-events: none;
-      background:
-        repeating-radial-gradient(circle at 27% 23%, rgba(255,255,255,0.08) 0 1px, transparent 1px 3px),
-        repeating-linear-gradient(37deg, rgba(5,5,5,0.032) 0 1px, transparent 1px 4px),
-        repeating-linear-gradient(128deg, rgba(255,255,255,0.032) 0 1px, transparent 1px 6px);
-      opacity: 0.24;
-      mix-blend-mode: soft-light;
-      z-index: 5;
+      animation: flowOrbit 12s linear infinite;
+      will-change: transform;
     }
 
-    .sphere-scan {
+    .flow-marker {
       position: absolute;
-      width: 72%;
-      height: 18%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, transparent 0%, rgba(76,255,176,0.08) 18%, rgba(76,255,176,0.28) 36%, rgba(255,255,255,0.70) 50%, rgba(32,80,255,0.22) 64%, rgba(32,80,255,0.06) 82%, transparent 100%);
-      filter: blur(3px);
-      opacity: 0.62;
-      transform: rotateX(72deg) rotateZ(-12deg) translateY(0);
-      transform-style: preserve-3d;
-      z-index: 4;
-      animation: sphereScan 4.8s ease-in-out infinite;
-    }
-
-    .sphere-rim {
-      position: absolute;
-      width: 70%;
-      aspect-ratio: 1;
+      left: 50%;
+      top: -7px;
+      width: 14px;
+      height: 14px;
+      border: 3px solid #ffffff;
       border-radius: 50%;
-      box-shadow:
-        inset 0 0 0 1px rgba(5,5,5,0.10),
-        inset 0 0 34px rgba(255,255,255,0.52),
-        0 0 34px rgba(76,255,176,0.12);
+      background: var(--green);
+      box-shadow: 0 0 0 1px rgba(5,5,5,0.14);
+      transform: translateX(-50%);
+    }
+
+    .flow-core {
+      position: relative;
       z-index: 2;
-      animation: sphereRimPulse 5.8s ease-in-out infinite;
+      width: 150px;
+      min-height: 112px;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 10px;
+      padding: 18px;
+      border: 1px solid rgba(5,5,5,0.16);
+      border-radius: 16px;
+      background: #111111;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.18);
     }
 
-    @keyframes sphereFloat {
-      0%,
-      100% {
-        transform: translateY(0) rotateX(0deg) rotateY(-8deg);
-      }
-
-      50% {
-        transform: translateY(-13px) rotateX(7deg) rotateY(10deg);
-      }
+    .flow-core strong {
+      font-size: 24px;
+      line-height: 1.05;
+      font-weight: 950;
     }
 
-    @keyframes sphereSurface {
+    .flow-core span {
+      color: rgba(255,255,255,0.66);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 750;
+      word-break: keep-all;
+    }
+
+    .flow-node {
+      position: absolute;
+      z-index: 3;
+      min-width: 94px;
+      display: grid;
+      gap: 4px;
+      padding: 12px 14px;
+      border: 1px solid rgba(5,5,5,0.14);
+      border-radius: 14px;
+      background: #ffffff;
+      color: var(--ink);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+    }
+
+    .flow-node span {
+      color: var(--ink-soft);
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .flow-node strong {
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .node-learn {
+      top: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-color: rgba(76,255,176,0.42);
+    }
+
+    .node-build {
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .node-docs {
+      bottom: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .node-feedback {
+      left: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @keyframes flowOrbit {
       to {
-        transform: rotate(-18deg) translateX(-42px);
-      }
-    }
-
-    @keyframes sphereHighlight {
-      0%,
-      100% {
-        transform: translateX(-66%) rotate(7deg);
-      }
-
-      48% {
-        transform: translateX(66%) rotate(7deg);
-      }
-    }
-
-    @keyframes sphereGridTilt {
-      0%,
-      100% {
-        transform: rotateX(58deg) rotateZ(-18deg) scale(1);
-      }
-
-      50% {
-        transform: rotateX(64deg) rotateZ(-10deg) scale(1.04);
-      }
-    }
-
-    @keyframes sphereScan {
-      0%,
-      100% {
-        transform: rotateX(72deg) rotateZ(-12deg) translateY(-74px);
-        opacity: 0;
-      }
-
-      38%,
-      68% {
-        opacity: 0.74;
-      }
-
-      50% {
-        transform: rotateX(72deg) rotateZ(-12deg) translateY(22px);
-      }
-    }
-
-    @keyframes sphereRimPulse {
-      0%,
-      100% {
-        transform: scale(0.96);
-        opacity: 0.58;
-      }
-
-      50% {
-        transform: scale(1.02);
-        opacity: 0.9;
-      }
-    }
-
-    @keyframes sphereShadow {
-      0%,
-      100% {
-        transform: scale(0.95);
-        opacity: 0.7;
-      }
-
-      50% {
-        transform: scale(0.78);
-        opacity: 0.44;
-      }
-    }
-
-    @keyframes sphereSweep {
-      0%,
-      100% {
-        transform: rotate(-18deg) translateX(-42px);
-        opacity: 0;
-      }
-
-      45% {
-        opacity: 0.44;
-      }
-
-      58% {
-        transform: rotate(-18deg) translateX(42px);
-        opacity: 0.28;
+        transform: rotate(360deg);
       }
     }
 
@@ -2179,7 +2080,7 @@
       }
 
       .compass-needle {
-        width: 8px;
+        width: 24px;
         height: 24px;
       }
 
@@ -2312,6 +2213,77 @@
 
       .project-head {
         flex-direction: column;
+      }
+
+      .dial {
+        width: min(360px, 100%);
+        border-radius: 16px;
+      }
+
+      .dial::before {
+        inset: 22px;
+      }
+
+      .flow-path {
+        width: 64%;
+      }
+
+      .flow-core {
+        width: 138px;
+        min-height: 94px;
+        gap: 8px;
+        padding: 14px;
+        border-radius: 14px;
+      }
+
+      .flow-core strong {
+        font-size: 20px;
+      }
+
+      .flow-core span {
+        font-size: 11px;
+      }
+
+      .flow-node {
+        min-width: 70px;
+        max-width: 112px;
+        padding: 9px 10px;
+        border-radius: 12px;
+      }
+
+      .flow-node strong {
+        font-size: 15px;
+        line-height: 1.1;
+        overflow-wrap: anywhere;
+      }
+
+      .node-learn,
+      .node-build,
+      .node-docs,
+      .node-feedback {
+        transform: none;
+      }
+
+      .node-learn {
+        top: 18px;
+        left: 16px;
+      }
+
+      .node-build {
+        top: 18px;
+        right: 16px;
+      }
+
+      .node-docs {
+        right: 16px;
+        bottom: 18px;
+        left: auto;
+      }
+
+      .node-feedback {
+        bottom: 18px;
+        left: 16px;
+        top: auto;
       }
 
       .visual {
@@ -2465,14 +2437,18 @@
               </article>
             </div>
           </div>
-          <div class="dial appear" aria-label="学习融入实践的动态球形图">
-            <span class="sphere-rim" aria-hidden="true"></span>
-            <span class="sphere-core" aria-hidden="true">
-              <span class="sphere-shine"></span>
-              <span class="sphere-grid"></span>
-              <span class="sphere-dither"></span>
-            </span>
-            <span class="sphere-scan" aria-hidden="true"></span>
+          <div class="dial appear" aria-label="学习实践循环图">
+            <div class="flow-path" aria-hidden="true">
+              <span class="flow-runner"><span class="flow-marker"></span></span>
+            </div>
+            <div class="flow-core">
+              <strong>学习循环</strong>
+              <span>理解 → 练习 → 复盘</span>
+            </div>
+            <div class="flow-node node-learn"><span>01</span><strong>学习</strong></div>
+            <div class="flow-node node-build"><span>02</span><strong>项目</strong></div>
+            <div class="flow-node node-docs"><span>03</span><strong>文档</strong></div>
+            <div class="flow-node node-feedback"><span>04</span><strong>反馈</strong></div>
           </div>
         </div>
 
@@ -2692,14 +2668,18 @@
               <p>目前暂无正式推荐语，后续会补充任课老师、小组成员、项目协作者或社区反馈。</p>
             </article>
           </div>
-          <div class="dial appear" aria-label="技能成长动态球形图">
-            <span class="sphere-rim" aria-hidden="true"></span>
-            <span class="sphere-core" aria-hidden="true">
-              <span class="sphere-shine"></span>
-              <span class="sphere-grid"></span>
-              <span class="sphere-dither"></span>
-            </span>
-            <span class="sphere-scan" aria-hidden="true"></span>
+          <div class="dial appear" aria-label="技能成长循环图">
+            <div class="flow-path" aria-hidden="true">
+              <span class="flow-runner"><span class="flow-marker"></span></span>
+            </div>
+            <div class="flow-core">
+              <strong>技能循环</strong>
+              <span>基础 → 工具 → 证明</span>
+            </div>
+            <div class="flow-node node-learn"><span>01</span><strong>基础</strong></div>
+            <div class="flow-node node-build"><span>02</span><strong>代码</strong></div>
+            <div class="flow-node node-docs"><span>03</span><strong>工具</strong></div>
+            <div class="flow-node node-feedback"><span>04</span><strong>证明</strong></div>
           </div>
         </div>
       </div>
@@ -2939,7 +2919,11 @@
       "每个项目都会继续补齐截图、仓库链接、说明文档和演示内容，方便回看和展示。": "Each project will keep gaining screenshots, repository links, documentation, and demos for review and presentation.",
       "保持基础阶段的真实表达": "Keep the early-stage story honest",
       "技能只写基础掌握、项目练习中和持续学习，不把大一阶段包装成成熟工作经历。": "Skills are described as fundamentals, project practice, and ongoing learning instead of mature work experience.",
-      "学习融入实践的动态球形图": "Animated sphere showing learning through practice",
+      "学习实践循环图": "Learning and practice loop graphic",
+      "学习循环": "Learning loop",
+      "理解 → 练习 → 复盘": "Understand → Practice → Review",
+      "文档": "Docs",
+      "反馈": "Feedback",
       "正在打磨的项目": "Projects in progress",
       "这里优先展示已经有明确方向的课程项目和个人工具。真实链接、截图和说明会随着项目进展继续补齐。": "This section highlights course projects and personal tools with a clear direction. Real links, screenshots, and notes will be added as they mature.",
       "Minecraft 好友服控制菜单 MOD": "Minecraft Friend Server Control Menu Mod",
@@ -3011,7 +2995,11 @@
       "Visual Studio Code、GitHub、Java / JDK、JavaFX、FXML、Office 和 Minecraft Fabric。": "Visual Studio Code, GitHub, Java / JDK, JavaFX, FXML, Office, and Minecraft Fabric.",
       "后续补充评价": "Future recommendations",
       "目前暂无正式推荐语，后续会补充任课老师、小组成员、项目协作者或社区反馈。": "There are no formal recommendations yet. Feedback from teachers, teammates, collaborators, or communities can be added later.",
-      "技能成长动态球形图": "Animated sphere showing skill growth",
+      "技能成长循环图": "Skill growth loop graphic",
+      "技能循环": "Skill loop",
+      "基础 → 工具 → 证明": "Basics → Tools → Evidence",
+      "基础": "Basics",
+      "证明": "Evidence",
       "我在哪里更新": "Where I update",
       "这里是内容输出和个人平台入口。GitHub 和 B 站是当前已有入口，小红书和公众号暂时作为未来占位。": "These are my content and personal platform links. GitHub and Bilibili are available now; Xiaohongshu and WeChat are future placeholders.",
       "GitHub Logo": "GitHub logo",
