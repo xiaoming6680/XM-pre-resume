@@ -16,7 +16,7 @@
       --white: #ffffff;
       --muted: rgba(255, 255, 255, 0.62);
       --muted-soft: rgba(255, 255, 255, 0.42);
-      --paper: #f7f7f5;
+      --paper: #ffffff;
       --paper-card: #ffffff;
       --ink: #050505;
       --ink-soft: #777777;
@@ -32,8 +32,8 @@
       --wide: min(1280px, calc(100vw - 48px));
       --font: Inter, "SF Pro Display", "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
       --bottom-glow-opacity: 0;
-      --bottom-glow-y: 36%;
-      --bottom-glow-scale: 0.78;
+      --bottom-glow-y: 42%;
+      --bottom-glow-scale: 0.72;
     }
 
     * {
@@ -1272,18 +1272,18 @@
       content: "";
       position: absolute;
       left: 50%;
-      bottom: -26%;
+      bottom: -32%;
       z-index: 0;
-      width: min(116vw, 1360px);
-      height: min(46vw, 520px);
-      min-height: 310px;
+      width: min(132vw, 1600px);
+      height: min(58vw, 680px);
+      min-height: 360px;
       transform: translateX(-50%) translateY(calc(var(--bottom-glow-y) * 0.72)) scale(calc(var(--bottom-glow-scale) * 0.92));
       transform-origin: 50% 100%;
       border-radius: 50% 50% 0 0;
       background:
-        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.34) 0%, rgba(76,255,176,0.30) 18%, rgba(18,169,181,0.20) 42%, transparent 72%);
+        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.36) 0%, rgba(196,255,232,0.34) 12%, rgba(76,255,176,0.31) 28%, rgba(18,169,181,0.22) 48%, rgba(32,80,255,0.14) 66%, transparent 84%);
       opacity: calc(var(--bottom-glow-opacity) * 0.62);
-      filter: blur(18px) saturate(1.1);
+      filter: blur(20px) saturate(1.12);
       pointer-events: none;
       animation: bottomGlowMist 6.8s ease-in-out infinite;
     }
@@ -1292,18 +1292,18 @@
       content: "";
       position: absolute;
       left: 50%;
-      bottom: -34%;
+      bottom: -40%;
       z-index: 0;
-      width: min(154vw, 1780px);
-      height: min(72vw, 760px);
-      min-height: 420px;
+      width: min(160vw, 1900px);
+      height: min(76vw, 860px);
+      min-height: 460px;
       transform: translateX(-50%) translateY(var(--bottom-glow-y)) scale(var(--bottom-glow-scale));
       transform-origin: 50% 100%;
       border-radius: 50% 50% 0 0;
       background:
-        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.62) 0%, rgba(196,255,232,0.50) 10%, rgba(76,255,176,0.44) 24%, rgba(18,169,181,0.34) 42%, rgba(32,80,255,0.22) 58%, transparent 76%);
+        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.58) 0%, rgba(224,255,244,0.50) 9%, rgba(76,255,176,0.44) 25%, rgba(18,169,181,0.32) 43%, rgba(32,80,255,0.22) 62%, transparent 84%);
       opacity: var(--bottom-glow-opacity);
-      filter: blur(6px) saturate(1.08);
+      filter: blur(8px) saturate(1.12);
       pointer-events: none;
       will-change: transform, opacity, filter;
       animation: bottomGlowPulse 4.8s ease-in-out infinite;
@@ -1552,10 +1552,10 @@
       }
 
       .contact::after {
-        bottom: -22%;
-        width: 170vw;
-        height: 90vw;
-        min-height: 330px;
+        bottom: -34%;
+        width: 178vw;
+        height: 92vw;
+        min-height: 430px;
       }
 
       .metric-grid,
@@ -1675,10 +1675,10 @@
       }
 
       .contact::after {
-        bottom: -18%;
-        width: 190vw;
-        height: 112vw;
-        min-height: 280px;
+        bottom: -30%;
+        width: 196vw;
+        height: 116vw;
+        min-height: 360px;
       }
 
       .project-head {
@@ -2155,6 +2155,7 @@
     const root = document.documentElement;
     const toast = document.getElementById("toast");
     const compass = document.querySelector(".mark");
+    const contactSection = document.querySelector(".contact");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     window.addEventListener("load", () => {
@@ -2172,14 +2173,23 @@
     }
 
     function updateBottomGlow() {
-      const scrollable = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const pageProgress = window.scrollY / scrollable;
-      const raw = Math.min(1, Math.max(0, (pageProgress - 0.78) / 0.22));
+      if (!contactSection) return;
+
+      const rect = contactSection.getBoundingClientRect();
+      const visible = Math.min(window.innerHeight, rect.bottom) - Math.max(0, rect.top);
+      if (visible <= 0) {
+        root.style.setProperty("--bottom-glow-opacity", "0");
+        root.style.setProperty("--bottom-glow-y", "42%");
+        root.style.setProperty("--bottom-glow-scale", "0.72");
+        return;
+      }
+
+      const raw = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / Math.max(1, rect.height)));
       const eased = raw * raw * (3 - 2 * raw);
 
-      root.style.setProperty("--bottom-glow-opacity", (eased * 0.96).toFixed(3));
-      root.style.setProperty("--bottom-glow-y", `${(36 - eased * 36).toFixed(2)}%`);
-      root.style.setProperty("--bottom-glow-scale", (0.78 + eased * 0.22).toFixed(3));
+      root.style.setProperty("--bottom-glow-opacity", (eased * 0.74).toFixed(3));
+      root.style.setProperty("--bottom-glow-y", `${(42 - eased * 44).toFixed(2)}%`);
+      root.style.setProperty("--bottom-glow-scale", (0.72 + eased * 0.34).toFixed(3));
     }
 
     function updateScrollEffects() {
